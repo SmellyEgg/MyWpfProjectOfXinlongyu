@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="xinlongyuOfWpf.CustomControls.Extension.ImageWithRoundedCorner"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Border Canvas.Left="55"
+            Canvas.Top="30"
+            Width="100"
+            Height="Auto"
+            Margin="12,12,8,0"
+            VerticalAlignment="Top"
+            BorderBrush="#FF3B5998"
+            BorderThickness=".5"
+            CornerRadius="18">
+            <Border.Effect>
+                    <DropShadowEffect BlurRadius="5"
+                              Opacity=".5"
+                              ShadowDepth="3" />
+                </Border.Effect>
+            <Border Name="ReceiverColor"
+                BorderBrush="#FF96B2E4"
+                BorderThickness="1"
+                CornerRadius="15">
+                <Grid>
+                    <Border Name="Mask"
+                        Background="White"
+                        BorderBrush="#FF3B5998"
+                        BorderThickness=".5"
+                        CornerRadius="13">
+                    </Border>
+                    <StackPanel>
+                        <Image Name="Receiver"
+                           Source="/Resources/picture.png" x:FieldModifier="public"
+                               Stretch="Uniform"/>
+                        <StackPanel.OpacityMask>
+                            <VisualBrush Visual="{Binding ElementName=Mask}" />
+                        </StackPanel.OpacityMask>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Border>
+    </Grid>
+</UserControl>
