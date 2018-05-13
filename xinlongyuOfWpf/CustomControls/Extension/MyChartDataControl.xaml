@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="xinlongyuOfWpf.CustomControls.Extension.MyChartDataControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <toolkit:Chart Height="262" HorizontalAlignment="Stretch"  Name="MyChart" Title="Column Series Demo" VerticalAlignment="Stretch" x:FieldModifier="public">
+            <toolkit:ColumnSeries x:Name="columnChart" DependentValuePath="Value" IndependentValuePath="Key" ItemsSource="{Binding}" Visibility="Collapsed"/>
+            <toolkit:PieSeries x:Name="pieChart" DependentValuePath="Value" IndependentValuePath="Key" ItemsSource="{Binding}" IsSelectionEnabled="True" Visibility="Collapsed"/>
+            <toolkit:AreaSeries x:Name ="areaChart" DependentValuePath="Value" IndependentValuePath="Key" ItemsSource="{Binding}" IsSelectionEnabled="True" Visibility="Collapsed"/>
+            <toolkit:BarSeries x:Name="barChart" DependentValuePath="Value" IndependentValuePath="Key" ItemsSource="{Binding}" IsSelectionEnabled="True" Visibility="Collapsed"/>
+            <toolkit:LineSeries x:Name="lineChart" DependentValuePath="Value" IndependentValuePath="Key" ItemsSource="{Binding}" IsSelectionEnabled="True" Visibility="Collapsed"/>
+        </toolkit:Chart>
+    </Grid>
+</UserControl>

@@ -7,6 +7,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using xinlongyuOfWpf.Controller.CommonPath;
+using xinlongyuOfWpf.Controller.ControlController;
+using xinlongyuOfWpf.Models.Request;
 
 namespace xinlongyuOfWpf.Controller.CommonController
 {
@@ -157,6 +159,37 @@ namespace xinlongyuOfWpf.Controller.CommonController
                     return true;
                 }
             }
+        }
+
+        /// <summary>
+        /// 默认请求的账户
+        /// </summary>
+        //private string userName = "guests";
+        private string _userName = "icity_test";
+
+        /// <summary>
+        /// 默认请求的密码，游客的密码采用的是明文
+        /// </summary>
+        //private string password = "123456";
+        private string _password = "b46bd96246d8a2776b60202b534c8b92";
+
+        /// <summary>
+        /// 构造基本请求
+        /// </summary>
+        /// <param name="apiType"></param>
+        /// <returns></returns>
+        public BaseRequest GetCommonBaseRequest(string apiType)
+        {
+            //这一步就实现了权限控制了
+            string newuserName = LocalCacher.GetCache("ICITY_USERNAME");
+            string newpassword = LocalCacher.GetCache("ICITY_PASSWORD");
+            if (string.IsNullOrEmpty(newuserName) || string.IsNullOrEmpty(newpassword))
+            {
+                newuserName = _userName;
+                newpassword = _password;
+            }
+            BaseRequest bj = new BaseRequest(newuserName, newpassword, apiType);
+            return bj;
         }
 
 

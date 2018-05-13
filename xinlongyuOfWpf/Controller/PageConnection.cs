@@ -16,17 +16,17 @@ namespace xinlongyuOfWpf.Controller
         /// </summary>
         private PageCacher _pageCacher;
 
-        /// <summary>
-        /// 默认请求的账户
-        /// </summary>
-        //private string userName = "guests";
-        private string userName = "icity_test";
+        ///// <summary>
+        ///// 默认请求的账户
+        ///// </summary>
+        ////private string userName = "guests";
+        //private string userName = "icity_test";
 
-        /// <summary>
-        /// 默认请求的密码，游客的密码采用的是明文
-        /// </summary>
-        //private string password = "123456";
-        private string password = "b46bd96246d8a2776b60202b534c8b92";
+        ///// <summary>
+        ///// 默认请求的密码，游客的密码采用的是明文
+        ///// </summary>
+        ////private string password = "123456";
+        //private string password = "b46bd96246d8a2776b60202b534c8b92";
 
         /// <summary>
         /// 平台
@@ -46,19 +46,19 @@ namespace xinlongyuOfWpf.Controller
         /// </summary>
         /// <param name="apiType"></param>
         /// <returns></returns>
-        private BaseRequest GetCommonBaseRequest(string apiType)
-        {
-            //这一步就实现了权限控制了
-            string newuserName = LocalCacher.GetCache("ICITY_USERNAME");
-            string newpassword = LocalCacher.GetCache("ICITY_PASSWORD");
-            if (string.IsNullOrEmpty(newuserName) || string.IsNullOrEmpty(newpassword))
-            {
-                newuserName = userName;
-                newpassword = password;
-            }
-            BaseRequest bj = new BaseRequest(newuserName, newpassword, apiType);
-            return bj;
-        }
+        //private BaseRequest GetCommonBaseRequest(string apiType)
+        //{
+        //    //这一步就实现了权限控制了
+        //    string newuserName = LocalCacher.GetCache("ICITY_USERNAME");
+        //    string newpassword = LocalCacher.GetCache("ICITY_PASSWORD");
+        //    if (string.IsNullOrEmpty(newuserName) || string.IsNullOrEmpty(newpassword))
+        //    {
+        //        newuserName = userName;
+        //        newpassword = password;
+        //    }
+        //    BaseRequest bj = new BaseRequest(newuserName, newpassword, apiType);
+        //    return bj;
+        //}
 
         /// <summary>
         /// 获取页面信息

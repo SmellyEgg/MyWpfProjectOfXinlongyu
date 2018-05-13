@@ -104,7 +104,7 @@ namespace xinlongyuOfWpf.CustomControls
                                 return;
                             }
                             //sql处理
-                            ConnectionManager cn = new ConnectionManager();
+                            SqlController cn = new SqlController();
                             //暂时注释
                             //value = DecoderAssistant.FormatSql(value.ToString(), this);
                             Dictionary<string, string>[] result = cn.ExcuteSqlWithReturn(value.ToString().Trim()).data;

@@ -69,7 +69,7 @@
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Smith.WPF.HtmlEditor">
-      <HintPath>bin\x64\Debug\ExternalDll\Smith.WPF.HtmlEditor.dll</HintPath>
+      <HintPath>bin\Debug\ExternalDll\Smith.WPF.HtmlEditor.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -84,6 +84,9 @@
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.108.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Controls.DataVisualization.Toolkit.4.0.0.0\lib\net40-Client\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -110,6 +113,7 @@
     <Compile Include="Controller\CommonController\ClassToXml.cs" />
     <Compile Include="Controller\CommonController\JsonController.cs" />
     <Compile Include="Controller\CommonController\Logging.cs" />
+    <Compile Include="Controller\CommonController\SqlController.cs" />
     <Compile Include="Controller\CommonType\JsonApiType.cs" />
     <Compile Include="Controller\CommonType\ReturnConst.cs" />
     <Compile Include="Controller\CommonType\xinLongyuControlType.cs" />
@@ -124,6 +128,10 @@
     <Compile Include="Controller\PageDecoder.cs" />
     <Compile Include="Controller\PageFactory.cs" />
     <Page Include="CustomControls\Extension\ImageWithRoundedCorner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\Extension\MyChartDataControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -152,6 +160,9 @@
     <Compile Include="CustomControls\Extension\ImageWithRoundedCorner.xaml.cs">
       <DependentUpon>ImageWithRoundedCorner.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\Extension\MyChartDataControl.xaml.cs">
+      <DependentUpon>MyChartDataControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\Extension\MyHtmlEditor.xaml.cs">
       <DependentUpon>MyHtmlEditor.xaml</DependentUpon>
     </Compile>
@@ -166,6 +177,7 @@
     <Compile Include="CustomControls\xinlongyuCacher.cs" />
     <Compile Include="CustomControls\xinlongyuCheckbox.cs" />
     <Compile Include="CustomControls\xinlongyuCombobox.cs" />
+    <Compile Include="CustomControls\xinlongyuDataChartControl.cs" />
     <Compile Include="CustomControls\xinlongyuForm.cs" />
     <Compile Include="CustomControls\xinlongyuImageControl.cs" />
     <Compile Include="CustomControls\xinlongyuLable.cs" />
@@ -186,8 +198,11 @@
     <Compile Include="Models\PageInfo\PageInfoRequest.cs" />
     <Compile Include="Models\Request\BaseRequest.cs" />
     <Compile Include="Models\Request\CommonLoginRequest.cs" />
+    <Compile Include="Models\Request\SqlExcuteRequest.cs" />
     <Compile Include="Models\Return\BaseReturn.cs" />
     <Compile Include="Models\Return\FileUploadReturn.cs" />
+    <Compile Include="Models\Return\SqlExcuteReturn.cs" />
+    <Compile Include="Models\Return\SqlExcuteReturnError.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
