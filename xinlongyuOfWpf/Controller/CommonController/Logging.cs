@@ -43,9 +43,9 @@ namespace xinlongyuOfWpf.Controller.CommonController
             {
                 try
                 {
-                    Directory.CreateDirectory(configManagerSection.logPath);
+                    Directory.CreateDirectory(ConfigManagerSection.logPath);
                     // don't use "/", it will fail when we call explorer /select xxx/ss_win_temp\xxx.log
-                    _tempPath = configManagerSection.logPath;
+                    _tempPath = ConfigManagerSection.logPath;
                 }
                 catch (Exception e)
                 {

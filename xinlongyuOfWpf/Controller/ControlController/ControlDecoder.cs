@@ -9,6 +9,9 @@ using xinlongyuOfWpf.Models.ControlInfo;
 
 namespace xinlongyuOfWpf.Controller.ControlController
 {
+    /// <summary>
+    /// 控件解析类
+    /// </summary>
     public class ControlDecoder
     {
         /// <summary>
@@ -21,7 +24,8 @@ namespace xinlongyuOfWpf.Controller.ControlController
           xinLongyuControlType.channerBarType,xinLongyuControlType.sectionType,
           xinLongyuControlType.radioType, xinLongyuControlType.checkboxType,
           xinLongyuControlType.multilineListType, xinLongyuControlType.PCGrid,
-          xinLongyuControlType.tabMenuControlType, xinLongyuControlType.pcnavigationBarType};
+          xinLongyuControlType.tabMenuControlType, xinLongyuControlType.pcnavigationBarType,
+          xinLongyuControlType.pcnavigationBarItemType};
 
         /// <summary>
         /// D0父控件集合
@@ -92,7 +96,8 @@ namespace xinlongyuOfWpf.Controller.ControlController
             {
                 control = new xinlongyuTextBox();
             }
-            else if (xinLongyuControlType.pageType.Equals(obj.ctrl_type))
+            else if (xinLongyuControlType.pageType.Equals(obj.ctrl_type)
+                || xinLongyuControlType.superViewType.Equals(obj.ctrl_type))
             {
                 control = new xinlongyuParentControl();
             }
@@ -104,16 +109,31 @@ namespace xinlongyuOfWpf.Controller.ControlController
             {
                 control = new xinlongyuLable();
             }
+            else if (xinLongyuControlType.pcnavigationBarType.Equals(obj.ctrl_type))
+            {
+                control = new xinlongyuNavigationControl();
+            }
+            else if (xinLongyuControlType.pcnavigationBarItemType.Equals(obj.ctrl_type))
+            {
+                control = new xinlongyuNavigationItem();
+            }
+            else if (xinLongyuControlType.articleEditorType.Equals(obj.ctrl_type))
+            {
+                control = new xinlongyuArticleEditor();
+            }
             else
             {
                 return null;
             }
 
-            //_currentForm.Name  = obj.ctrl_id.ToString();
+            //(control as FrameworkElement).Name  = obj.ctrl_id.ToString();//设置名称标记
+            
             (control as FrameworkElement).VerticalAlignment = VerticalAlignment.Top;
             (control as FrameworkElement).HorizontalAlignment = HorizontalAlignment.Left;
 
             (control as FrameworkElement).Tag = obj;
+
+            this.SetControlProperty(control, obj);
             
 
             return control;
@@ -127,6 +147,7 @@ namespace xinlongyuOfWpf.Controller.ControlController
             IControl control = this.GetIControl(controlObj);
             listControl.Add(control);
 
+            #region 判断类型
             if (fatherControl.GetType() == typeof(Page))
             {
                 (fatherControl as Page).Content = control as UIElement;
@@ -139,20 +160,40 @@ namespace xinlongyuOfWpf.Controller.ControlController
             {
                 (fatherControl as ScrollViewer).Content = control as UIElement;
             }
+            else if (fatherControl.GetType() == typeof(xinlongyuNavigationControl))
+            {
+                (fatherControl as TreeView).Items.Add(control as UIElement);
+            }
+            else if (fatherControl.GetType() == typeof(xinlongyuNavigationItem))
+            {
+                (fatherControl as TreeViewItem).Header = control as UIElement;
+            }
+            //else if (fatherControl.GetType() == typeof(StackPanel))
+            //{
+            //    (fatherControl as StackPanel).Children.Add(control as UIElement);
+            //}
             else
             {
-                //(fatherControl as Canvas).Children.Add(control as UIElement);
                 (fatherControl as Grid).Children.Add(control as UIElement);
             }
+            #endregion
+
             return control;
         }
 
         /// <summary>
         /// 生成父控件
         /// </summary>
-        private void ProduceFatherControl(ControlDetailForPage controlObj, List<ControlDetailForPage> listControlObj, List<IControl> listControl, UIElement fatherControl)
+        public void ProduceFatherControl(ControlDetailForPage controlObj, List<ControlDetailForPage> listControlObj, List<IControl> listControl, UIElement fatherControl)
         {
             IControl newfatherControl = this.ProductChildControl(controlObj, listControl, fatherControl);
+
+            //导航栏控件由自身进行初始化
+            if (xinLongyuControlType.pcnavigationBarType.Equals(controlObj.ctrl_type))
+            {
+                (newfatherControl as xinlongyuNavigationControl).InitControl(controlObj, listControlObj, listControl);
+                return;
+            }
 
             //获取子控件列表
             string controlList = _D0FatherControlList.Contains(controlObj.ctrl_type) ? controlObj.d0 : controlObj.d17;

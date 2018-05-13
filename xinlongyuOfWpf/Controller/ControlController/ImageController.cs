@@ -80,10 +80,10 @@ namespace xinlongyuOfWpf.Controller.ControlController
             string extension = Path.GetExtension(url);
             string pattern = @"[^a-z&&^0-9]";
             url = System.Text.RegularExpressions.Regex.Replace(url, pattern, string.Empty);
-            string filepath = configManagerSection.localImageFolder + "\\" + url + extension;
-            if (!Directory.Exists(configManagerSection.localImageFolder))
+            string filepath = ConfigManagerSection.localImageFolder + "\\" + url + extension;
+            if (!Directory.Exists(ConfigManagerSection.localImageFolder))
             {
-                Directory.CreateDirectory(configManagerSection.localImageFolder);
+                Directory.CreateDirectory(ConfigManagerSection.localImageFolder);
             }
             return filepath;
         }

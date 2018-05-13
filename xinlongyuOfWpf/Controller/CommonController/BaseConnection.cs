@@ -31,7 +31,7 @@ namespace xinlongyuOfWpf.Controller.CommonController
         /// <returns></returns>
         private string GetServiceUrl()
         {
-            string url = xmlController.GetNodeByXpath(configManagerSection.urlPath, configManagerSection.CommonconfigFilePath);
+            string url = xmlController.GetNodeByXpath(ConfigManagerSection.urlPath, ConfigManagerSection.CommonconfigFilePath);
             return url;
         }
 

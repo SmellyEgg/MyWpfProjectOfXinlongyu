@@ -18,6 +18,9 @@ namespace xinlongyuOfWpf.CustomControls
         public List<ControlDetailForPage> _currentControlObjList;
         public List<IControl> _currentControlList;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public xinlongyuForm()
         {
 

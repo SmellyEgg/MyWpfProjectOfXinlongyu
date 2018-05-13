@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Controls;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.CommonType;
 using xinlongyuOfWpf.Controller.ControlController;
-using xinlongyuOfWpf.CustomControls;
 using xinlongyuOfWpf.Models.ControlInfo;
 using xinlongyuOfWpf.Models.PageInfo;
 
@@ -80,18 +78,18 @@ namespace xinlongyuOfWpf.Controller
 
             var page = _controlDecode.ProduceControl(pageControl, listControl, listControlObject);
             //设置页面控件基本属性
-            foreach (IControl control in listControl)
-            {
-                ControlDetailForPage controlObj = (control as FrameworkElement).Tag as ControlDetailForPage;
-                try
-                {
-                    _controlDecode.SetControlProperty(control, controlObj);
-                }
-                catch (Exception ex)
-                {
-                    Logging.Error("设置控件属性出错type:" + controlObj.ctrl_type + "--" + ex.Message);
-                }
-            }
+            //foreach (IControl control in listControl)
+            //{
+            //    ControlDetailForPage controlObj = (control as FrameworkElement).Tag as ControlDetailForPage;
+            //    try
+            //    {
+            //        _controlDecode.SetControlProperty(control, controlObj);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Logging.Error("设置控件属性出错type:" + controlObj.ctrl_type + "--" + ex.Message);
+            //    }
+            //}
 
             return page;
 

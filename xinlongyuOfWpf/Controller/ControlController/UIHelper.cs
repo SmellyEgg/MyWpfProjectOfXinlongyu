@@ -62,7 +62,6 @@ namespace xinlongyuOfWpf.Controller.ControlController
                     break;
                 }
             }
-
             return foundChild;
         }
     }

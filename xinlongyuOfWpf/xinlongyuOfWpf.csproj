@@ -35,6 +35,26 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
@@ -42,8 +62,14 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.8.2.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.8.2\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Smith.WPF.HtmlEditor">
+      <HintPath>bin\x64\Debug\ExternalDll\Smith.WPF.HtmlEditor.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -58,6 +84,7 @@
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.108.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -89,6 +116,7 @@
     <Compile Include="Controller\ControlController\ControlDecoder.cs" />
     <Compile Include="Controller\ControlController\IControl.cs" />
     <Compile Include="Controller\ControlController\ImageController.cs" />
+    <Compile Include="Controller\ControlController\LocalCacher.cs" />
     <Compile Include="Controller\ControlController\UIHelper.cs" />
     <Compile Include="Controller\OtherController\LocalCacher.cs" />
     <Compile Include="Controller\PageCacher.cs" />
@@ -96,6 +124,10 @@
     <Compile Include="Controller\PageDecoder.cs" />
     <Compile Include="Controller\PageFactory.cs" />
     <Page Include="CustomControls\Extension\ImageWithRoundedCorner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\Extension\MyHtmlEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -116,9 +148,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controller\CommonController\xmlController.cs" />
-    <Compile Include="Controller\CommonPath\configManagerSection.cs" />
+    <Compile Include="Controller\CommonPath\ConfigManagerSection.cs" />
     <Compile Include="CustomControls\Extension\ImageWithRoundedCorner.xaml.cs">
       <DependentUpon>ImageWithRoundedCorner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\Extension\MyHtmlEditor.xaml.cs">
+      <DependentUpon>MyHtmlEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="CustomControls\Extension\TextBlockWithAlignMent.xaml.cs">
       <DependentUpon>TextBlockWithAlignMent.xaml</DependentUpon>
@@ -126,11 +161,16 @@
     <Compile Include="CustomControls\Extension\textBoxWithPlaceHolderText.xaml.cs">
       <DependentUpon>textBoxWithPlaceHolderText.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\xinlongyuArticleEditor.cs" />
     <Compile Include="CustomControls\xinlongyuButton.cs" />
+    <Compile Include="CustomControls\xinlongyuCacher.cs" />
+    <Compile Include="CustomControls\xinlongyuCheckbox.cs" />
+    <Compile Include="CustomControls\xinlongyuCombobox.cs" />
     <Compile Include="CustomControls\xinlongyuForm.cs" />
     <Compile Include="CustomControls\xinlongyuImageControl.cs" />
     <Compile Include="CustomControls\xinlongyuLable.cs" />
     <Compile Include="CustomControls\xinlongyuNavigationControl.cs" />
+    <Compile Include="CustomControls\xinlongyuNavigationItem.cs" />
     <Compile Include="CustomControls\xinlongyuParentControl.cs" />
     <Compile Include="CustomControls\xinlongyuTextBox.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -147,6 +187,7 @@
     <Compile Include="Models\Request\BaseRequest.cs" />
     <Compile Include="Models\Request\CommonLoginRequest.cs" />
     <Compile Include="Models\Return\BaseReturn.cs" />
+    <Compile Include="Models\Return\FileUploadReturn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

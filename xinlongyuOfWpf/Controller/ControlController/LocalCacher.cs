@@ -1,21 +1,23 @@
-﻿
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.CommonPath;
 using xinlongyuOfWpf.Models.CommonModel;
 
-namespace xinlongyuOfWpf.Controller.OtherController
+namespace xinlongyuOfWpf.Controller.ControlController
 {
     /// <summary>
-    /// 本地缓存管理类
+    /// 本地缓存类
     /// 暂时用于存放登陆信息
     /// </summary>
     public class LocalCacher
     {
         /// <summary>
-        /// 添加到缓存中
+        /// 添加缓存
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>

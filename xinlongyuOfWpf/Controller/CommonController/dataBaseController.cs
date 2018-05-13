@@ -122,7 +122,7 @@ namespace xinlongyuOfWpf.Controller.CommonController
         /// <returns></returns>
         public string GetDatabaseName()
         {
-            string url = configManagerSection.dataBasePath;
+            string url = ConfigManagerSection.dataBasePath;
             string dbPath = "Data Source =" + url;
             return dbPath;
         }

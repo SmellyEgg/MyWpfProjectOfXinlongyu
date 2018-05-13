@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using xinlongyuOfWpf.Controller;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.CommonPath;
@@ -19,19 +9,23 @@ using xinlongyuOfWpf.Controller.CommonPath;
 namespace xinlongyuOfWpf
 {
     /// <summary>
-    /// MainWindow.xaml 的交互逻辑
+    /// 原始主窗体界面
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// 页面工厂类
+        /// </summary>
         private _pageFactory _pageFactory;
 
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
 
             _pageFactory = new _pageFactory();
-
-            this.Visibility = Visibility.Hidden;
             LoadPage();
         }
 
@@ -43,13 +37,13 @@ namespace xinlongyuOfWpf
         {
             try
             {
-                string id = xmlController.GetNodeByXpath(configManagerSection.firstPageID, configManagerSection.CommonconfigFilePath);
+                string id = xmlController.GetNodeByXpath(ConfigManagerSection.firstPageID, ConfigManagerSection.CommonconfigFilePath);
                 return int.Parse(id);
             }
             catch
             {
                 //默认导航到2073
-                return configManagerSection.defaultPageId;
+                return ConfigManagerSection.defaultPageId;
             }
         }
 
@@ -73,6 +67,7 @@ namespace xinlongyuOfWpf
             _winMain.Title = "城市服务";
             //加载默认的第一个页面
             int pageId = GetFirstPageID();
+            //pageId = 2073;
             var page = await _pageFactory.ProducePage(pageId);
             if (object.Equals(page, null))
             {

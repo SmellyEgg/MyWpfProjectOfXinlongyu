@@ -7,7 +7,7 @@ namespace xinlongyuOfWpf.Controller.CommonPath
     /// <summary>
     /// 通用节点值
     /// </summary>
-    public class configManagerSection
+    public class ConfigManagerSection
     {
         /// <summary>
         /// 默认加载的页面ID
@@ -48,5 +48,10 @@ namespace xinlongyuOfWpf.Controller.CommonPath
         /// 数据库路径
         /// </summary>
         public static string dataBasePath = AppDomain.CurrentDomain.BaseDirectory + @"\Database\xinlongyuClient.db";
+
+        /// <summary>
+        /// 通用api地址
+        /// </summary>
+        public static readonly string serverUrl = @"https://icityservice.cn";
     }
 }

@@ -7,8 +7,12 @@
         mc:Ignorable="d"
          Height="450" Width="800"
         Closed="Window_Closed"
+        Visibility="Hidden"
         >
     <Grid>
+        <TextBlock Text="I am text"
+                   VerticalAlignment="Top"
+                   Margin="20, 10, 0, 0"/>
         <!--<CheckBox Content="选择以下我把"/>-->
         <!--<TreeView ItemsSource="{Binding Items}">
             <TreeView.ItemTemplate>
