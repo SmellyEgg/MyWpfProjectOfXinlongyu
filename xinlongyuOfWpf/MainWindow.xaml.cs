@@ -60,6 +60,7 @@ namespace xinlongyuOfWpf
         {
             
             _winMain = new NavigationWindow();
+            _winMain.ResizeMode = ResizeMode.CanResize;
             //设置图标
             var uri = new Uri("pack://application:,,,/Resources/MyLogo.jpg");
             BitmapImage bitmapImage = new BitmapImage(uri);
@@ -67,6 +68,29 @@ namespace xinlongyuOfWpf
             _winMain.Title = "城市服务";
             //加载默认的第一个页面
             int pageId = GetFirstPageID();
+
+            this.Refresh(pageId);
+            ////pageId = 2073;
+            //var page = await _pageFactory.ProducePage(pageId);
+            //if (object.Equals(page, null))
+            //{
+            //    page = await _pageFactory.GetDefaultPage();
+
+            //}
+            //_winMain.Content = page;
+
+            //_winMain.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            //_winMain.Width = page.Width;
+            //_winMain.Height = page.Height;
+
+            //_winMain.Closed -= Win_Closed;
+            //_winMain.Closed += Win_Closed;
+
+            //_winMain.Show();
+        }
+
+        public async void Refresh(int pageId)
+        {
             //pageId = 2073;
             var page = await _pageFactory.ProducePage(pageId);
             if (object.Equals(page, null))

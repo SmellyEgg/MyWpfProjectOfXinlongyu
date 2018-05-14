@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.ControlController;
 using xinlongyuOfWpf.CustomControls.Extension;

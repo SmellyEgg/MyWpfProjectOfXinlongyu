@@ -135,6 +135,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CustomControls\Extension\MyDataGridControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomControls\Extension\MyHtmlEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -163,9 +167,13 @@
     <Compile Include="CustomControls\Extension\MyChartDataControl.xaml.cs">
       <DependentUpon>MyChartDataControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\Extension\MyDataGridControl.xaml.cs">
+      <DependentUpon>MyDataGridControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\Extension\MyHtmlEditor.xaml.cs">
       <DependentUpon>MyHtmlEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\Extension\StringToBitmapImageConverter.cs" />
     <Compile Include="CustomControls\Extension\TextBlockWithAlignMent.xaml.cs">
       <DependentUpon>TextBlockWithAlignMent.xaml</DependentUpon>
     </Compile>
@@ -193,6 +201,7 @@
   <ItemGroup>
     <Compile Include="Models\CommonModel\KeyToValue.cs" />
     <Compile Include="Models\ControlInfo\ControlDetailForPage.cs" />
+    <Compile Include="Models\OtherModel\ObjectHelperForDataGrid.cs" />
     <Compile Include="Models\PageInfo\PageBaseInfo.cs" />
     <Compile Include="Models\PageInfo\PageInfoDetail.cs" />
     <Compile Include="Models\PageInfo\PageInfoRequest.cs" />
