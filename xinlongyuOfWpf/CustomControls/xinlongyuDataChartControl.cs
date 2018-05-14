@@ -62,7 +62,8 @@ namespace xinlongyuOfWpf.CustomControls
             {
                 string sql = value.ToString();
                 SqlController cn = new SqlController();
-                Dictionary<string, string>[] result = cn.ExcuteSqlWithReturn(sql).data;
+                var dicReturn = cn.ExcuteSqlWithReturn(sql);
+                Dictionary<string, string>[] result = dicReturn.data;
                 List<KeyValuePair<string, int>> source = this.DictionaryToListKeyValuePair(result);
                 this.MyChart.DataContext = source;
             }

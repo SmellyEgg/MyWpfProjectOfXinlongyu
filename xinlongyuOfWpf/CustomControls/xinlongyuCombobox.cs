@@ -107,7 +107,8 @@ namespace xinlongyuOfWpf.CustomControls
                             SqlController cn = new SqlController();
                             //暂时注释
                             //value = DecoderAssistant.FormatSql(value.ToString(), this);
-                            Dictionary<string, string>[] result = cn.ExcuteSqlWithReturn(value.ToString().Trim()).data;
+                            var returnDic = cn.ExcuteSqlWithReturn(value.ToString().Trim());
+                            var result = returnDic.data;
                             if (!object.Equals(result, null) && result.Length > 0)
                             {
                                 foreach (Dictionary<string, string> dic in result)

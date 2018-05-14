@@ -69,7 +69,7 @@ namespace xinlongyuOfWpf
             //加载默认的第一个页面
             int pageId = GetFirstPageID();
 
-            this.Refresh(pageId);
+            await this.Refresh(pageId);
             ////pageId = 2073;
             //var page = await _pageFactory.ProducePage(pageId);
             //if (object.Equals(page, null))
@@ -89,7 +89,7 @@ namespace xinlongyuOfWpf
             //_winMain.Show();
         }
 
-        public async void Refresh(int pageId)
+        public async System.Threading.Tasks.Task<int> Refresh(int pageId)
         {
             //pageId = 2073;
             var page = await _pageFactory.ProducePage(pageId);
@@ -108,6 +108,7 @@ namespace xinlongyuOfWpf
             _winMain.Closed += Win_Closed;
 
             _winMain.Show();
+            return 1;
         }
 
         /// <summary>

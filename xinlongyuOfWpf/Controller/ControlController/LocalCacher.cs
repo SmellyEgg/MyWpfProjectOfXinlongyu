@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.CommonPath;
 using xinlongyuOfWpf.Models.CommonModel;
@@ -16,6 +17,11 @@ namespace xinlongyuOfWpf.Controller.ControlController
     /// </summary>
     public class LocalCacher
     {
+        /// <summary>
+        /// 缓存的图片
+        /// </summary>
+        public static Dictionary<string, BitmapImage> _ListCachedPhoto = new Dictionary<string, BitmapImage>();
+
         /// <summary>
         /// 添加缓存
         /// </summary>

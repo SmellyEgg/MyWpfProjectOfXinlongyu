@@ -186,6 +186,7 @@
     <Compile Include="CustomControls\xinlongyuCheckbox.cs" />
     <Compile Include="CustomControls\xinlongyuCombobox.cs" />
     <Compile Include="CustomControls\xinlongyuDataChartControl.cs" />
+    <Compile Include="CustomControls\xinlongyuDataGird.cs" />
     <Compile Include="CustomControls\xinlongyuForm.cs" />
     <Compile Include="CustomControls\xinlongyuImageControl.cs" />
     <Compile Include="CustomControls\xinlongyuLable.cs" />

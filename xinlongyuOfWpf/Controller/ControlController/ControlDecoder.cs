@@ -121,6 +121,10 @@ namespace xinlongyuOfWpf.Controller.ControlController
             {
                 control = new xinlongyuArticleEditor();
             }
+            else if (xinLongyuControlType.PCGrid.Equals(obj.ctrl_type))
+            {
+                control = new xinlongyuDataGird();
+            }
             else
             {
                 return null;
@@ -192,6 +196,12 @@ namespace xinlongyuOfWpf.Controller.ControlController
             if (xinLongyuControlType.pcnavigationBarType.Equals(controlObj.ctrl_type))
             {
                 (newfatherControl as xinlongyuNavigationControl).InitControl(controlObj, listControlObj, listControl);
+                return;
+            }
+
+            if (xinLongyuControlType.PCGrid.Equals(controlObj.ctrl_type))
+            {
+                (newfatherControl as xinlongyuDataGird).LoadData(listControlObj, controlObj);
                 return;
             }
 

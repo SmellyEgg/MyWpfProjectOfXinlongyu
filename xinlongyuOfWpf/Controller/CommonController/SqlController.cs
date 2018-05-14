@@ -23,8 +23,8 @@ namespace xinlongyuOfWpf.Controller.CommonController
             bj.data = sr;
             try
             {
-                var result = this.Post(bj);
-                BaseReturn brj = JsonController.DeSerializeToClass<BaseReturn>(result.Result);
+                var result =  this.PostForSql(bj);
+                BaseReturn brj = JsonController.DeSerializeToClass<BaseReturn>(result);
                 try
                 {
                     SqlExcuteReturn ser = JsonController.DeSerializeToClass<SqlExcuteReturn>(brj.data.ToString());

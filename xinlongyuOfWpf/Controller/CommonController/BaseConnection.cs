@@ -57,12 +57,48 @@ namespace xinlongyuOfWpf.Controller.CommonController
         }
 
         /// <summary>
-        /// 上传文件
+        /// 传数据
         /// </summary>
-        /// <param name="filepath"></param>
-        /// <param name="values"></param>
+        /// <param name="jsonContent"></param>
         /// <returns></returns>
-        public async Task<string> PostFile(string filepath, KeyValuePair<string, string>[] values)
+        public  string PostForSql(object dataobj)
+        {
+            string jsonContent = JsonController.SerializeToJson(dataobj);
+            WebRequest request = (WebRequest)HttpWebRequest.Create(_urlService);
+            request.Method = "POST";
+            byte[] postBytes = null;
+            request.ContentType = @"application/x-www-form-urlencoded";
+            postBytes = Encoding.UTF8.GetBytes(jsonContent);
+            request.ContentLength = postBytes.Length;
+            request.Timeout = 3000;
+            using (Stream outstream = request.GetRequestStream())
+            {
+                outstream.Write(postBytes, 0, postBytes.Length);
+            }
+            string result = string.Empty;
+            using (WebResponse response =  request.GetResponse())
+            {
+                if (response != null)
+                {
+                    using (Stream stream = response.GetResponseStream())
+                    {
+                        using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
+                        {
+                            result =  reader.ReadToEnd();
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+            /// <summary>
+            /// 上传文件
+            /// </summary>
+            /// <param name="filepath"></param>
+            /// <param name="values"></param>
+            /// <returns></returns>
+            public async Task<string> PostFile(string filepath, KeyValuePair<string, string>[] values)
         {
             if (string.IsNullOrEmpty(_urlService))
             {
