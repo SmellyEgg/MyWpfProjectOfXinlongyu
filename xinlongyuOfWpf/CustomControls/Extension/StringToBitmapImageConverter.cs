@@ -17,7 +17,7 @@ namespace xinlongyuOfWpf.CustomControls.Extension
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             string uristring = value as string;
-            if (string.IsNullOrEmpty(uristring.Trim()))
+            if (string.IsNullOrEmpty(uristring))
             {
                 return CommonConverter.ImageToBitMapImage(Properties.Resources.picture);
             }

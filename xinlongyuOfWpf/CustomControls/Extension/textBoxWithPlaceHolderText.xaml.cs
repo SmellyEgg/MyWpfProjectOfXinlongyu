@@ -20,6 +20,36 @@ namespace xinlongyuOfWpf.CustomControls.Extension
     /// </summary>
     public partial class textBoxWithPlaceHolderText : UserControl
     {
+
+        public static readonly DependencyProperty TextProperty =
+        DependencyProperty.Register
+        (
+            "TipText",
+            typeof(string),
+            typeof(textBoxWithPlaceHolderText),
+            new FrameworkPropertyMetadata("")
+        );
+
+        public string TipText
+        {
+            set { this.txtTips.Text = value; }
+        }
+
+        public static readonly DependencyProperty TextPropertyForTextBox =
+       DependencyProperty.Register
+       (
+           "Text",
+           typeof(string),
+           typeof(textBoxWithPlaceHolderText),
+           new FrameworkPropertyMetadata("")
+       );
+
+        public string Text
+        {
+            get { return this.txtContent.Text; }
+            set { this.txtContent.Text = value; }
+        }
+
         public textBoxWithPlaceHolderText()
         {
             InitializeComponent();

@@ -3,10 +3,73 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:extension="clr-namespace:xinlongyuOfWpf.CustomControls.Extension"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+
+            <extension:textBoxWithPlaceHolderText Width="250" Height="30" Margin="6" x:Name="txtBoxOfFilterStr" VerticalAlignment="Center"
+                                                  HorizontalAlignment="Left" Grid.Column="0" KeyDown="txtBoxOfFilterStr_KeyDown"/>
+            <Button Content="搜索" Height="30" Margin="6"  Style="{DynamicResource ButtonWithRoundedCorner}"
+                    Background="#0080C0" Foreground="White" VerticalAlignment="Center" Grid.Column="1" HorizontalContentAlignment="Center"
+                    Click="BtnBeginFilter"/>
+            <Button Content="过滤" Height="30" Margin="6" Style="{DynamicResource ButtonWithRoundedCorner}" 
+                    Background="#0080C0" Foreground="White" VerticalAlignment="Center" Grid.Column="2" Click="BtnFilterClick"/>
+            <Button Content="导出EXCEL" Height="30" Margin="6" Style="{DynamicResource ButtonWithRoundedCorner}" 
+                    Background="#0080C0" Foreground="White" VerticalAlignment="Center" Grid.Column="3" Click="BtnExportExcel"/>
+        </Grid>
+        
         <DataGrid x:Name="mydatagridview" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="False"
-                  CanUserAddRows="False" />
+                  CanUserAddRows="False" Grid.Row="1"/>
+
+        <Grid Grid.Row="2" Height="50">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button Content="首页" Height="30" Margin="6" Style="{DynamicResource ButtonWithRoundedCorner}" 
+                    Background="#0080C0" Foreground="White" VerticalAlignment="Center" Grid.Column="1"
+                    Click="BtnPageTurning"/>
+            <Button Content="前一页" Height="30" Margin="6" Style="{DynamicResource ButtonWithRoundedCorner}" 
+                    Background="#0080C0" Foreground="White" VerticalAlignment="Center" Grid.Column="2"
+                    Click="BtnPageTurning"/>
+            <Button Content="下一页" Height="30" Margin="6" Style="{DynamicResource ButtonWithRoundedCorner}" 
+                    Background="#0080C0" Foreground="White" VerticalAlignment="Center" Grid.Column="3"
+                    Click="BtnPageTurning"/>
+            <Button Content="尾页" Height="30" Margin="6" Style="{DynamicResource ButtonWithRoundedCorner}" 
+                    Background="#0080C0" Foreground="White" VerticalAlignment="Center" Grid.Column="4"
+                    Click="BtnPageTurning"/>
+            <TextBlock Text="当前页" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="lblCurrentPageIndex"/>
+            <TextBlock Text="共0条数据" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="lblTotalPageCount"/>
+            <extension:textBoxWithPlaceHolderText  Margin="6" x:Name="txtJumpPage" VerticalAlignment="Center"
+                                                  HorizontalAlignment="Stretch" Grid.Column="7" Height="30" />
+            <Button Content="跳转" Height="30" Margin="6" Style="{DynamicResource ButtonWithRoundedCorner}"
+                    Background="#0080C0" Foreground="White" VerticalAlignment="Center" Grid.Column="8" 
+                    Click="btnJumpPage"/>
+        </Grid>
+        
     </Grid>
 </UserControl>

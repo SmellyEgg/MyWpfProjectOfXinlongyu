@@ -100,6 +100,24 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -127,6 +145,10 @@
     <Compile Include="Controller\PageConnection.cs" />
     <Compile Include="Controller\PageDecoder.cs" />
     <Compile Include="Controller\PageFactory.cs" />
+    <Page Include="CustomControls\Extension\FrmColumnSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomControls\Extension\ImageWithRoundedCorner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -136,6 +158,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CustomControls\Extension\MyDataGridControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\Extension\MyDateTimePicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -151,6 +177,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CustomControls\xinlongyuMultipleFileUploader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -161,6 +191,9 @@
     </Compile>
     <Compile Include="Controller\CommonController\xmlController.cs" />
     <Compile Include="Controller\CommonPath\ConfigManagerSection.cs" />
+    <Compile Include="CustomControls\Extension\FrmColumnSelector.xaml.cs">
+      <DependentUpon>FrmColumnSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\Extension\ImageWithRoundedCorner.xaml.cs">
       <DependentUpon>ImageWithRoundedCorner.xaml</DependentUpon>
     </Compile>
@@ -169,6 +202,9 @@
     </Compile>
     <Compile Include="CustomControls\Extension\MyDataGridControl.xaml.cs">
       <DependentUpon>MyDataGridControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\Extension\MyDateTimePicker.xaml.cs">
+      <DependentUpon>MyDateTimePicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="CustomControls\Extension\MyHtmlEditor.xaml.cs">
       <DependentUpon>MyHtmlEditor.xaml</DependentUpon>
@@ -187,9 +223,15 @@
     <Compile Include="CustomControls\xinlongyuCombobox.cs" />
     <Compile Include="CustomControls\xinlongyuDataChartControl.cs" />
     <Compile Include="CustomControls\xinlongyuDataGird.cs" />
+    <Compile Include="CustomControls\xinlongyuDateTimePicker.cs" />
     <Compile Include="CustomControls\xinlongyuForm.cs" />
+    <Compile Include="CustomControls\xinlongyuGetData.cs" />
     <Compile Include="CustomControls\xinlongyuImageControl.cs" />
     <Compile Include="CustomControls\xinlongyuLable.cs" />
+    <Compile Include="CustomControls\xinlongyuLogicControl.cs" />
+    <Compile Include="CustomControls\xinlongyuMultipleFileUploader.xaml.cs">
+      <DependentUpon>xinlongyuMultipleFileUploader.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\xinlongyuNavigationControl.cs" />
     <Compile Include="CustomControls\xinlongyuNavigationItem.cs" />
     <Compile Include="CustomControls\xinlongyuParentControl.cs" />
@@ -202,6 +244,8 @@
   <ItemGroup>
     <Compile Include="Models\CommonModel\KeyToValue.cs" />
     <Compile Include="Models\ControlInfo\ControlDetailForPage.cs" />
+    <Compile Include="Models\DecodeModel\DecoderOfControl.cs" />
+    <Compile Include="Models\OtherModel\BoolStringClass.cs" />
     <Compile Include="Models\OtherModel\ObjectHelperForDataGrid.cs" />
     <Compile Include="Models\PageInfo\PageBaseInfo.cs" />
     <Compile Include="Models\PageInfo\PageInfoDetail.cs" />
