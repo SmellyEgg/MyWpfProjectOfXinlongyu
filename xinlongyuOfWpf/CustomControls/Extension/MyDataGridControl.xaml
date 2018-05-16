@@ -34,7 +34,7 @@
         </Grid>
         
         <DataGrid x:Name="mydatagridview" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="False"
-                  CanUserAddRows="False" Grid.Row="1"/>
+                  CanUserAddRows="False" Grid.Row="1" LoadingRow="DataGrid_LoadingRow"/>
 
         <Grid Grid.Row="2" Height="50">
             <Grid.ColumnDefinitions>

@@ -125,6 +125,10 @@ namespace xinlongyuOfWpf.Controller.ControlController
             {
                 control = new xinlongyuDataGird();
             }
+            else if (xinLongyuControlType.reviewControlType.Equals(obj.ctrl_type))
+            {
+                control = new xinlongyuReviewControl();
+            }
             else
             {
                 return null;

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.CommonType;
 using xinlongyuOfWpf.Controller.OtherController;
+using xinlongyuOfWpf.Models.GroupInfo;
 using xinlongyuOfWpf.Models.PageInfo;
 using xinlongyuOfWpf.Models.Request;
 using xinlongyuOfWpf.Models.Return;
@@ -16,18 +18,6 @@ namespace xinlongyuOfWpf.Controller
         /// </summary>
         private PageCacher _pageCacher;
 
-        ///// <summary>
-        ///// 默认请求的账户
-        ///// </summary>
-        ////private string userName = "guests";
-        //private string userName = "icity_test";
-
-        ///// <summary>
-        ///// 默认请求的密码，游客的密码采用的是明文
-        ///// </summary>
-        ////private string password = "123456";
-        //private string password = "b46bd96246d8a2776b60202b534c8b92";
-
         /// <summary>
         /// 平台
         /// </summary>
@@ -40,25 +30,6 @@ namespace xinlongyuOfWpf.Controller
         {
             _pageCacher = new PageCacher();
         }
-
-        /// <summary>
-        /// 构造基本请求
-        /// </summary>
-        /// <param name="apiType"></param>
-        /// <returns></returns>
-        //private BaseRequest GetCommonBaseRequest(string apiType)
-        //{
-        //    //这一步就实现了权限控制了
-        //    string newuserName = LocalCacher.GetCache("ICITY_USERNAME");
-        //    string newpassword = LocalCacher.GetCache("ICITY_PASSWORD");
-        //    if (string.IsNullOrEmpty(newuserName) || string.IsNullOrEmpty(newpassword))
-        //    {
-        //        newuserName = userName;
-        //        newpassword = password;
-        //    }
-        //    BaseRequest bj = new BaseRequest(newuserName, newpassword, apiType);
-        //    return bj;
-        //}
 
         /// <summary>
         /// 获取页面信息
@@ -130,6 +101,108 @@ namespace xinlongyuOfWpf.Controller
 
             return bj;
         }
+
+        /// <summary>
+        /// 获取最近上传页面
+        /// </summary>
+        /// <param name="version"></param>
+        /// <returns></returns>
+        public async Task<List<PageGroupDetail>> GetRecentUploadPages()
+        {
+            string apitype = JsonApiType.groupPageGet;
+            BaseRequest bj = GetCommonBaseRequest(apitype);
+            string reviewState = "0";
+            RecentUploadPageRequest pgd = new RecentUploadPageRequest(reviewState);
+            bj.api_type = apitype;
+            bj.data = pgd;
+            try
+            {
+                var result = await Post(bj);
+                BaseReturn brj = JsonController.DeSerializeToClass<BaseReturn>(result);
+                pageGroupReturnData pgr = JsonController.DeSerializeToClass<pageGroupReturnData>(brj.data.ToString());
+                if (!object.Equals(pgr.data, null) && pgr.data.Length > 0)
+                {
+                    List<PageGroupDetail> listreturn = new List<PageGroupDetail>();
+                    listreturn.AddRange(pgr.data);
+                    return listreturn;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 获取页面分组信息
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<pageDetailForGroup>> GetPageGroupInfo(string pageid)
+        {
+            string apitype = JsonApiType.groupPageGet;
+            BaseRequest bj = GetCommonBaseRequest(apitype);
+            //string review = "0";
+            string review = string.Empty;
+            PageGroupData pgd = new PageGroupData(pageid, review);
+            bj.api_type = apitype;
+            bj.data = pgd;
+            try
+            {
+                var result = await Post(bj);
+                BaseReturn brj = JsonController.DeSerializeToClass<BaseReturn>(result);
+                pageGroupReturnData pgr = JsonController.DeSerializeToClass<pageGroupReturnData>(brj.data.ToString());
+                if (!object.Equals(pgr.data, null) && pgr.data.Length > 0)
+                {
+                    List<pageDetailForGroup> listpage = new List<pageDetailForGroup>();
+                    listpage.AddRange(pgr.data[0].page_list);
+                    return listpage;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                string test = ex.Message;
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 审核页面
+        /// </summary>
+        /// <param name="pageid"></param>
+        /// <param name="version"></param>
+        /// <returns></returns>
+        public async Task<bool> ReviewPage(string pageid, int version)
+        {
+            string apitype = JsonApiType.reviewPage;
+            BaseRequest bj = GetCommonBaseRequest(apitype);
+            ReviewRequest re = new ReviewRequest(version, pageid);
+            bj.api_type = apitype;
+            bj.data = re;
+            try
+            {
+                var result = await Post(bj);
+                BaseReturn brj = JsonController.DeSerializeToClass<BaseReturn>(result);
+                CommonReturn cr = JsonController.DeSerializeToClass<CommonReturn>(brj.data.ToString());
+                if (cr.error_code.Equals(ReturnConst.right))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
 
     }
 }

@@ -6,8 +6,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBox   VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  x:Name="txtContent"
-                  VerticalContentAlignment="Center" Style="{DynamicResource textboxWithRoundedCorner}" x:FieldModifier="public"/>
+        <TextBox   VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  x:Name="txtContent" 
+                  VerticalContentAlignment="Center" Style="{DynamicResource textboxWithRoundedCorner}" x:FieldModifier="public"
+                   TextWrapping="Wrap" AcceptsReturn="True"/>
         <TextBlock x:Name="txtTips" IsHitTestVisible="False"  VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" Foreground="DarkGray"
                    x:FieldModifier="public">
             <TextBlock.Style>

@@ -587,12 +587,25 @@ namespace xinlongyuOfWpf.CustomControls.Extension
 
         }
 
-
-
+        /// <summary>
+        /// 导出Excel按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnExportExcel(object sender, RoutedEventArgs e)
         {
             //ExportToExcelAndCsv();
             MessageBox.Show("该功能暂未开发完成！");
+        }
+
+        /// <summary>
+        /// 显示序号
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + (_currentPageIndex - 1) * _pageSize).ToString();
         }
     }
 }

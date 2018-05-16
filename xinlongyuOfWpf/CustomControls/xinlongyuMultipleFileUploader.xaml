@@ -12,14 +12,19 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <ListBox Margin="6">
+        <ListBox Margin="6" x:Name="MyListBox">
             
         </ListBox>
 
         <StackPanel Orientation="Horizontal" Grid.Row="1"
                     HorizontalAlignment="Center">
-            <Button Content="插入" Width="100" Height="30" Style="{DynamicResource ButtonWithRoundedCorner}" Background="#0080C0" Foreground="White" Margin="6"/>
-            <Button Content="删除"  Width="100" Height="30" Style="{DynamicResource ButtonWithRoundedCorner}" Background="#0080C0" Foreground="White" Margin="6"/>
+            <Button Content="插入" Width="100" Height="30" 
+                    Style="{DynamicResource ButtonWithRoundedCorner}" Background="#0080C0" Foreground="White" 
+                    Margin="6" Click="BtnInsertClick"/>
+            <Button Content="删除"  Width="100" Height="30" 
+                    Style="{DynamicResource ButtonWithRoundedCorner}" 
+                    Background="#0080C0" Foreground="White" Margin="6"
+                    Click="BtnDeleteItemClick"/>
         </StackPanel>
         
     </Grid>

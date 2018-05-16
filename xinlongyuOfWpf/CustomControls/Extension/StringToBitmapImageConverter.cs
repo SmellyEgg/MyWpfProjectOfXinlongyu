@@ -7,8 +7,6 @@ using xinlongyuOfWpf.Controller.ControlController;
 
 namespace xinlongyuOfWpf.CustomControls.Extension
 {
-    
-
     /// <summary>
     /// 字符串与图像转换类
     /// </summary>
