@@ -75,7 +75,8 @@ namespace xinlongyuOfWpf.Controller.CommonController
         /// <returns></returns>
         public static System.Windows.Media.Color ConvertStringToColor(String hex)
         {
-            //remove the # at the front
+            //remove the # at the fron
+            if (string.IsNullOrEmpty(hex)) return System.Windows.Media.Colors.AliceBlue;
             hex = hex.Replace("#", "");
 
             byte a = 255;

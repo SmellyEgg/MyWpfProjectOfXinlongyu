@@ -1,8 +1,5 @@
-﻿using HtmlAgilityPack;
-using System;
+﻿
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Forms;
 using System.Windows.Navigation;
 using xinlongyuOfWpf.Controller.ControlController;
 using xinlongyuOfWpf.Models.ControlInfo;
@@ -12,7 +9,7 @@ namespace xinlongyuOfWpf.CustomControls
     /// <summary>
     /// 视频上传控件
     /// </summary>
-    public partial class xinlongyuVideoUploader : UserControl, IControl
+    public partial class xinlongyuVideoUploader : System.Windows.Controls.UserControl, IControl
     {
         /// <summary>
         /// 构造函数
@@ -56,19 +53,21 @@ namespace xinlongyuOfWpf.CustomControls
             {
                 try
                 {
-                    HtmlElement script = MyWebBrowse.Document;
-                    script.SetAttribute("type", "text/javascript");
+                    //使用的mshtml空间下的控件，不知道有没有效果
+                    var document = MyWebBrowse.Document as mshtml.HTMLDocument;
+                    var script = document.createElement("script");
+                    script.setAttribute("type", "text/javascript");
                     _isAppended = true;
-                    script.SetAttribute("text", "function _func(){$('#uploadVideoNow-file').click();}");
-                    HtmlElement head = this.Document.Body.AppendChild(script);
-                    this.Document.InvokeScript("_func");
+                    script.setAttribute("text", "function _func(){$('#uploadVideoNow-file').click();}");
+                    var head = document.body.children(script);
+                    MyWebBrowse.InvokeScript("_func");
                     this._currentBrowserMode = browserMode.result;
 
-                    if (CommonFunction.IsFinishLoading)
-                    {
-                        CommonFunction.IsFinishLoading = false;
-                        CommonFunction.ShowWaitingForm();
-                    }
+                    //if (CommonFunction.IsFinishLoading)
+                    //{
+                    //    CommonFunction.IsFinishLoading = false;
+                    //    CommonFunction.ShowWaitingForm();
+                    //}
                 }
                 catch (System.Exception ex)
                 {

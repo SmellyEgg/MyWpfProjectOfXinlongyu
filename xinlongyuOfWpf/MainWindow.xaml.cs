@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
+using Xceed.Wpf.Toolkit;
 using xinlongyuOfWpf.Controller;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.CommonPath;
@@ -18,6 +20,8 @@ namespace xinlongyuOfWpf
         /// </summary>
         private _pageFactory _pageFactory;
 
+        private List<Page> _listPageHistory;
+
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -26,6 +30,7 @@ namespace xinlongyuOfWpf
             InitializeComponent();
 
             _pageFactory = new _pageFactory();
+            _listPageHistory = new List<Page>();
             LoadPage();
         }
 
@@ -50,7 +55,7 @@ namespace xinlongyuOfWpf
         /// <summary>
         /// 导航控件主窗体
         /// </summary>
-        NavigationWindow _winMain;
+        Window _winMain;
 
 
         /// <summary>
@@ -58,56 +63,65 @@ namespace xinlongyuOfWpf
         /// </summary>
         private async void LoadPage()
         {
-            
-            _winMain = new NavigationWindow();
+            _winMain = new Window();
             _winMain.ResizeMode = ResizeMode.CanResize;
             //设置图标
             var uri = new Uri("pack://application:,,,/Resources/MyLogo.jpg");
             BitmapImage bitmapImage = new BitmapImage(uri);
             _winMain.Icon = bitmapImage;
             _winMain.Title = "城市服务";
+            _winMain.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             //加载默认的第一个页面
             int pageId = GetFirstPageID();
-
+            ShowWaitingForm();
             await this.Refresh(pageId);
-            ////pageId = 2073;
-            //var page = await _pageFactory.ProducePage(pageId);
-            //if (object.Equals(page, null))
-            //{
-            //    page = await _pageFactory.GetDefaultPage();
+        }
 
-            //}
-            //_winMain.Content = page;
+        /// <summary>
+        /// 等待控件
+        /// </summary>
+        BusyIndicator btControl;
 
-            //_winMain.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            //_winMain.Width = page.Width;
-            //_winMain.Height = page.Height;
-
-            //_winMain.Closed -= Win_Closed;
-            //_winMain.Closed += Win_Closed;
-
-            //_winMain.Show();
+        /// <summary>
+        /// 显示等待窗体
+        /// </summary>
+        private void ShowWaitingForm()
+        {
+            btControl = new BusyIndicator();
+            btControl.IsBusy = true;
+            btControl.BusyContent = "正在加载中";
+            _winMain.Content = btControl;
+            _winMain.Show();
         }
 
         public async System.Threading.Tasks.Task<int> Refresh(int pageId)
         {
-            //pageId = 2073;
             var page = await _pageFactory.ProducePage(pageId);
+            bool isNeedToAdd = true;
             if (object.Equals(page, null))
             {
                 page = await _pageFactory.GetDefaultPage();
-
+                isNeedToAdd = false;
             }
+            //暂停显示按钮
+            if (!object.Equals(btControl, null))
+            {
+                btControl.IsBusy = false;
+                btControl = null;
+            }
+            _winMain.Content = null;
             _winMain.Content = page;
 
-            _winMain.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            if (isNeedToAdd) _listPageHistory.Add(page);
+
+            
             _winMain.Width = page.Width;
             _winMain.Height = page.Height;
 
             _winMain.Closed -= Win_Closed;
             _winMain.Closed += Win_Closed;
 
-            _winMain.Show();
+            //_winMain.Show();
             return 1;
         }
 

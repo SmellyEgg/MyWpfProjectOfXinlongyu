@@ -39,7 +39,7 @@ namespace xinlongyuOfWpf.Controller
         public async Task<PageInfoDetail> GetPageInfo(int pageId)
         {
             //string pageVersion = string.IsNullOrEmpty(LocalCacher.GetCache("page_version")) ? "0" : LocalCacher.GetCache("page_version");
-            string pageVersion = "4";
+            string pageVersion = "2";
             BaseRequest bj = this.GetPageRequest(pageId, pageVersion);
             try
             {

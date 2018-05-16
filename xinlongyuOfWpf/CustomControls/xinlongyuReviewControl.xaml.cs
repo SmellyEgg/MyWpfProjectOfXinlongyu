@@ -31,6 +31,16 @@ namespace xinlongyuOfWpf.CustomControls
         }
 
         /// <summary>
+        /// 设置行高
+        /// </summary>
+        /// <param name="text"></param>
+        public void SetD19(string text)
+        {
+            if (!string.IsNullOrEmpty(text))
+                MyDataGrid.RowHeight = CommonConverter.StringToInt(text);
+        }
+
+        /// <summary>
         /// 刷新树列表
         /// </summary>
         /// <param name="sender"></param>
@@ -98,7 +108,20 @@ namespace xinlongyuOfWpf.CustomControls
             bool result = await _pageConnection.ReviewPage(tagItem.page_id.ToString(), CommonConverter.StringToInt(tagItem.version));
             if (result)
             {
-                RefreshDataGrid(tagItem.page_id.ToString());
+                //RefreshDataGrid(tagItem.page_id.ToString());
+                //这里为了提高性能，不去数据库重新获取
+                var listpageresult = MyDataGrid.ItemsSource as List<pageDetailForGroup>;
+                listpageresult = listpageresult.Select(
+                    x => {
+                        if (x.version.Equals(tagItem.version))
+                            x.review = "1";
+                        else
+                            x.review = "-1";
+                        return x; }).ToList();
+                MyDataGrid.ItemsSource = listpageresult;
+                MyDataGrid.SelectedIndex = -1;
+                //
+
                 MessageBox.Show("审核成功!");
             }
             else

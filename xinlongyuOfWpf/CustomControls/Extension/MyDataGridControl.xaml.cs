@@ -7,7 +7,6 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Input;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.CommonType;
 using xinlongyuOfWpf.Models.ControlInfo;
@@ -80,6 +79,7 @@ namespace xinlongyuOfWpf.CustomControls.Extension
         {
             //var sql = obj.d0;
             var dicarray = _sqlController.ExcuteSqlWithReturn(sql).data;
+            if (object.Equals(dicarray, null)) return;
             //var dicarray = dicresult.Result.data;
             var listsource = DicArrayToListObject(dicarray);
 
@@ -124,7 +124,8 @@ namespace xinlongyuOfWpf.CustomControls.Extension
             //获取所有的列
             List<int> listChildId = JsonController.DeSerializeToClass<List<int>>(gridObj.d17);
             List<ControlDetailForPage> listAllColumns = listControlObj.Where(p => listChildId.Contains(p.ctrl_id) 
-            && xinLongyuControlType.GridColumnName.Equals(p.ctrl_type)).ToList();
+            && xinLongyuControlType.GridColumnName.Equals(p.ctrl_type))
+            .OrderBy(p => CommonConverter.StringToInt(p.d21)).ToList();
             //获取键值对应字典
             Dictionary<int, string> ctrlIdToColumnName = this.GetDicCtrlToColumn(gridObj.d22);
             //生成列类型
@@ -388,7 +389,7 @@ namespace xinlongyuOfWpf.CustomControls.Extension
                 }
                 else
                 {
-                    filter = " where " + filter;
+                    if (!string.IsNullOrEmpty(filter)) filter = " where " + filter;
                 }
                 newSql = newSql.Insert(insertLocation, filter);
                 return newSql;
@@ -439,6 +440,7 @@ namespace xinlongyuOfWpf.CustomControls.Extension
             if (pageIndex <= _totalPage && pageIndex >= 1)
             {
                 _currentPageIndex = pageIndex;
+                lblCurrentPageIndex.Text = _currentPageIndex.ToString() + " / " + _totalPage.ToString();//当前页面设置
                 PageTurning();
             }
             else

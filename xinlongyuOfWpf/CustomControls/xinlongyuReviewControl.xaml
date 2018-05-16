@@ -12,7 +12,7 @@
         <converters:ReviewToOnlineStateConverter x:Key="MyConveter" />
     </UserControl.Resources>
     
-    <Grid>
+    <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="4*" />
             <RowDefinition Height="*" />
@@ -32,25 +32,40 @@
         </StackPanel>
 
         <DataGrid Grid.Row="2" AutoGenerateColumns="False" x:Name="MyDataGrid" CanUserAddRows="False">
+            
+            <!--设置选中行的背景颜色-->
+            <!--<DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+                   Color="DarkGray"/>
+            </DataGrid.Resources>-->
+
+            <!--设置已上线行的背景颜色-->
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding review}" Value="1">
-                            <Setter Property="Background" Value="Red"></Setter>
+                            <Setter Property="Background" Value="ForestGreen"></Setter>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="页面ID" Width="50" Binding="{Binding page_id}"/>
-                <DataGridTextColumn Header="页面名称" Width="200" Binding="{Binding page_name}"/>
+                <DataGridTextColumn Header="页面ID" Width="50" Binding="{Binding page_id}">
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="页面名称" Width="200" Binding="{Binding page_name}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="版本号" Width="50" Binding="{Binding version}"/>
                 <DataGridTextColumn Header="审核状态" Width="80" Binding="{Binding Path=review, Converter={StaticResource MyConveter}}"/>
-                <DataGridTemplateColumn Header="操作" Width="80">
+                <DataGridTemplateColumn Header="操作" Width="150">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Style="{DynamicResource ButtonWithRoundedCorner}"
-                                    Background="#0080C0" Margin="1"
+                                    Background="#0080C0" Margin="6"
                                     Foreground="White" Click="BtnReviewClick" 
                                     Tag="{Binding}">审核</Button>
                         </DataTemplate>
