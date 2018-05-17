@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using xinlongyuOfWpf.Controller.CommonPath;
 
 namespace xinlongyuOfWpf.Controller.PageController
 {
@@ -33,13 +35,11 @@ namespace xinlongyuOfWpf.Controller.PageController
         /// </summary>
         /// <param name="pageId">页面ID</param>
         /// <returns></returns>
-        public async Task<Page> ProducePage(int pageId)
+        private async Task<Page> ProducePage(int pageId)
         {
             var pageInfo = await _pageConnection.GetPageInfo(pageId);
             if (object.Equals(pageInfo, null)) return null;
             var page = _pageDecoder.DecodePage(pageInfo);
-            //page.HorizontalAlignment = HorizontalAlignment.Stretch;
-            //page.VerticalAlignment = VerticalAlignment.Stretch;
             return page;
         }
 
@@ -58,9 +58,28 @@ namespace xinlongyuOfWpf.Controller.PageController
             grid.Children.Add(txt);
             Page page = new Page();
             page.Content = grid;
-
             return Task.Run(() => page);
         }
 
+        /// <summary>
+        /// 显示页面
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="pageId"></param>
+        public async Task ShowPage(Window window, int pageId, List<Page> listPage)
+        {
+            //window.Content = null;
+            var page = await ProducePage(pageId);
+            if (object.Equals(page, null)) return;
+            window.Content = null;
+            window.Content = page;
+            listPage.Add(page);
+            window.Width = page.Width;
+            window.Height = page.Height + ConfigManagerSection.TitleBarHeight;
+           
+            window.Show();
+        }
+
+        
     }
 }

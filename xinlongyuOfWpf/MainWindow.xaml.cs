@@ -66,69 +66,38 @@ namespace xinlongyuOfWpf
         private async void LoadPage()
         {
             _winMain = new Window();
+            _winMain.Tag = _listPageHistory;
             _winMain.ResizeMode = ResizeMode.CanResize;
             //设置图标
             var uri = new Uri("pack://application:,,,/Resources/MyLogo.jpg");
             BitmapImage bitmapImage = new BitmapImage(uri);
             _winMain.Icon = bitmapImage;
             _winMain.Title = "城市服务";
-            _winMain.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+            _winMain.Closed -= Win_Closed;
+            _winMain.Closed += Win_Closed;
+            _winMain.SizeChanged -= Window_SizeChanged;
+            _winMain.SizeChanged += Window_SizeChanged;
+            //_winMain.SizeChanged += _winMain_SizeChanged;
             //加载默认的第一个页面
             int pageId = GetFirstPageID();
             //
             pageId = 1001;
             //
             CommonFunction.ShowWaitingForm(_winMain);
-            await this.Refresh(pageId);
+            await _pageFactory.ShowPage(_winMain, pageId, _listPageHistory);
         }
 
         /// <summary>
-        /// 等待控件
+        /// 尺寸改变事件
+        /// 居中控制
         /// </summary>
-        BusyIndicator btControl;
-
-        /// <summary>
-        /// 显示等待窗体
-        /// </summary>
-        private void ShowWaitingForm()
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            btControl = new BusyIndicator();
-            btControl.IsBusy = true;
-            btControl.BusyContent = "正在加载中";
-            _winMain.Content = btControl;
-            _winMain.Show();
-        }
-
-        public async System.Threading.Tasks.Task<int> Refresh(int pageId)
-        {
-            var page = await _pageFactory.ProducePage(pageId);
-            bool isNeedToAdd = true;
-            if (object.Equals(page, null))
-            {
-                page = await _pageFactory.GetDefaultPage();
-                isNeedToAdd = false;
-            }
-            //暂停显示按钮
-            //if (!object.Equals(btControl, null))
-            //{
-            //    btControl.IsBusy = false;
-            //    btControl = null;
-            //}
-            _winMain.Content = null;
-            _winMain.Content = page;
-
-            if (isNeedToAdd) _listPageHistory.Add(page);
-
-            
-            _winMain.Width = page.Width;
-            _winMain.Height = page.Height + ConfigManagerSection.TitleBarHeight;
-
-            _winMain.Closed -= Win_Closed;
-            _winMain.Closed += Win_Closed;
-
-            _winMain.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
-            //_winMain.Show();
-            return 1;
+            (sender as Window).WindowStartupLocation = System.Windows.WindowStartupLocation.Manual;
+            (sender as Window).Left = (SystemParameters.WorkArea.Width - (sender as Window).Width) / 2 + SystemParameters.WorkArea.Left;
+            (sender as Window).Top = (SystemParameters.WorkArea.Height - (sender as Window).Height) / 2 + SystemParameters.WorkArea.Top;
         }
 
         /// <summary>

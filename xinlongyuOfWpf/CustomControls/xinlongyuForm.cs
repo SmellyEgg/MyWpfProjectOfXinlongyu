@@ -18,12 +18,14 @@ namespace xinlongyuOfWpf.CustomControls
         public List<ControlDetailForPage> _currentControlObjList;
         public List<IControl> _currentControlList;
 
+        private int _pageId = 0;
+
         /// <summary>
         /// 
         /// </summary>
-        public xinlongyuForm()
+        public xinlongyuForm(int pageId)
         {
-
+            _pageId = pageId;
         }
 
         public xinlongyuForm(int pageId, Dictionary<string, string> parameter)
@@ -31,6 +33,11 @@ namespace xinlongyuOfWpf.CustomControls
             _pageCache = new Dictionary<string, string>();
             SetParameters(parameter);
         }
+
+        /// <summary>
+        /// 当前页面ID
+        /// </summary>
+        public int PageId { get => _pageId; }
 
         /// <summary>
         /// 设置参数，相当于添加缓存

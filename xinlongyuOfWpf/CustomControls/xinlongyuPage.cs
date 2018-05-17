@@ -98,13 +98,7 @@ namespace xinlongyuOfWpf.CustomControls
                 var window = Window.GetWindow(this);
                 CommonFunction.ShowWaitingForm(window);
                 PageFactory pagefactory = new PageFactory();
-                var page = await pagefactory.ProducePage(pageId);
-                window.Content = null;
-                window.Content = page;
-                window.Width = page.Width;
-                window.Height = page.Height;
-                //window.ShowDialog();
-                //pageController.CreatePage(pageId, isDialog, isNeedThread, null);
+                await pagefactory.ShowPage(window, pageId, window.Tag as List<Page>);
             }
             //接下来是有传值的方法，格式应该是类似(1236, text={1.d0}&type=animal)
             else

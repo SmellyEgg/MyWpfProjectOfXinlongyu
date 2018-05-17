@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.CommonPath;
 using xinlongyuOfWpf.Controller.CommonType;
+using xinlongyuOfWpf.Controller.PageController;
 using xinlongyuOfWpf.CustomControls;
 using xinlongyuOfWpf.Models.ControlInfo;
 
@@ -74,7 +77,7 @@ namespace xinlongyuOfWpf.Controller.ControlController
             //scrollView.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
             //scrollView.Content = _currentForm;
 
-            xinlongyuForm page = new xinlongyuForm();
+            xinlongyuForm page = new xinlongyuForm(pageobj.page_id);
             page.Content = _currentForm;
             page.Width = pageobj.d1;
             page.Height = pageobj.d2;
@@ -101,32 +104,67 @@ namespace xinlongyuOfWpf.Controller.ControlController
             gridTitle.Orientation = Orientation.Horizontal;
             gridTitle.HorizontalAlignment = HorizontalAlignment.Left;
             gridTitle.VerticalAlignment = VerticalAlignment.Top;
+            //返回按钮
             xinlongyuButton btnBack = new xinlongyuButton();
-            //Image imgBack = new Image();
-            //imgBack.Stretch = System.Windows.Media.Stretch.Fill;
-            //imgBack.Source = CommonConverter.ImageToBitMapImage(Properties.Resources.backButton);
-            //btnBack.Content = imgBack;
-            btnBack.Content = "返回";
-            btnBack.Width = 72;
+            Image imgBack = new Image();
+            //imgBack.Stretch = Stretch.Fill;
+            imgBack.Source = new BitmapImage(
+   new Uri("pack://application:,,,/xinlongyuOfWpf;component/Resources/mybackbutton.png"));
+            btnBack.Content = imgBack;
+            btnBack.Width = 36;
             btnBack.Height = 36;
-            btnBack.Background = new SolidColorBrush(CommonConverter.ConvertStringToColor("#0080C0"));
-            btnBack.Foreground = new SolidColorBrush(Colors.White);
+            btnBack.Background = Brushes.Transparent;
             btnBack.Margin = new Thickness(5);
+            btnBack.BorderThickness = new Thickness(0);
+            //刷新按钮
             xinlongyuButton btnRefresh = new xinlongyuButton();
-            //Image imgRefresh = new Image();
-            //imgRefresh.Stretch = System.Windows.Media.Stretch.Fill;
-            //imgRefresh.Source = CommonConverter.ImageToBitMapImage(Properties.Resources.refresh);
-            //btnRefresh.Content = imgRefresh;
-            btnRefresh.Content = "刷新";
-            btnRefresh.Width = 72;
-            btnRefresh.Height = 36;
-            btnRefresh.Background = new SolidColorBrush(CommonConverter.ConvertStringToColor("#0080C0"));
-            btnRefresh.Foreground = new SolidColorBrush(Colors.White);
+            Image imgRefresh = new Image();
+            imgRefresh.Stretch = Stretch.Fill;
+            imgRefresh.Source = new BitmapImage(
+   new Uri("pack://application:,,,/xinlongyuOfWpf;component/Resources/refreshButton.png"));
+            btnRefresh.Content = imgRefresh;
+            btnRefresh.Background = Brushes.Transparent;
+            btnRefresh.Width = 25;
+            btnRefresh.Height = 25;
             btnRefresh.Margin = new Thickness(5);
+            btnRefresh.BorderThickness = new Thickness(0);
+
             gridTitle.Children.Add(btnBack);
             gridTitle.Children.Add(btnRefresh);
             gridTitle.SetValue(Grid.RowProperty, 0);
             gridControl.Children.Add(gridTitle);
+            //添加事件
+            btnBack.Click += (s, e) => {
+                var window = Window.GetWindow(btnBack);
+                var listPage = window.Tag as List<Page>;
+                if (!object.Equals(listPage, null) && listPage.Count > 1)
+                {
+                    //CommonFunction.ShowWaitingForm(window);
+                    window.Content = null;
+                    listPage.RemoveAt(listPage.Count - 1);
+                    var page = listPage[listPage.Count - 1];
+                    window.Content = page;
+                    window.Width = page.Width;
+                    window.Height = page.Height + ConfigManagerSection.TitleBarHeight;
+                }
+                else
+                {
+
+                }
+            };
+            //刷新事件
+            btnRefresh.Click += async (s, e) => {
+                var window = Window.GetWindow(btnRefresh);
+                var page = window.Content as xinlongyuForm;
+                var listPage = window.Tag as List<Page>;
+                if (!object.Equals(page, null))
+                {
+                    listPage.RemoveAt(listPage.Count - 1);
+                    PageFactory pageFactory = new PageFactory();
+                    await pageFactory.ShowPage(window, page.PageId, listPage);
+                    MessageBox.Show("刷新成功");
+                }
+            };
         }
 
         /// <summary>

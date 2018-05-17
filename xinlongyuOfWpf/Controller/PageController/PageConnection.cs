@@ -90,8 +90,8 @@ namespace xinlongyuOfWpf.Controller.PageController
         /// <returns></returns>
         private BaseRequest GetPageRequest(int pageId, string pageVersion)
         {
-            //int timestamp = _pageCacher.GetTimeStampOfPage(pageId);
-            int timestamp = 0;
+            int timestamp = _pageCacher.GetTimeStampOfPage(pageId);
+            //int timestamp = 0;
             string apitype = JsonApiType.page;
             BaseRequest bj = this.GetCommonBaseRequest(apitype);
             //string pageVersion = "4";
