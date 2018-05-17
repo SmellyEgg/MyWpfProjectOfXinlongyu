@@ -2,7 +2,9 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using xinlongyuOfWpf.Controller.CommonController;
+using xinlongyuOfWpf.Controller.CommonPath;
 using xinlongyuOfWpf.Controller.CommonType;
 using xinlongyuOfWpf.CustomControls;
 using xinlongyuOfWpf.Models.ControlInfo;
@@ -46,12 +48,13 @@ namespace xinlongyuOfWpf.Controller.ControlController
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public Page ProduceControl(ControlDetailForPage pageobj, List<IControl> listControl, List<ControlDetailForPage> listControlObj)
+        public xinlongyuForm ProduceControl(ControlDetailForPage pageobj, List<IControl> listControl, List<ControlDetailForPage> listControlObj)
         {
             Grid _currentForm = new Grid();
+            AddTitleBar(_currentForm);
             if (_fatherControlList.Contains(pageobj.ctrl_type))
             {
-                this.ProduceFatherControl(pageobj, listControlObj, listControl, _currentForm);
+                this.ProduceFatherControl(pageobj, listControlObj, listControl, _currentForm, true);
             }
             else
             {
@@ -61,7 +64,9 @@ namespace xinlongyuOfWpf.Controller.ControlController
             
             _currentForm.HorizontalAlignment = HorizontalAlignment.Stretch;
             _currentForm.VerticalAlignment = VerticalAlignment.Stretch;
-            _currentForm.Margin = new Thickness(10);
+            //_currentForm.Margin = new Thickness(10);
+
+
             //实现窗体的滚动条
             //ScrollViewer scrollView = new ScrollViewer();
             //scrollView.HorizontalAlignment = HorizontalAlignment.Stretch;
@@ -69,13 +74,59 @@ namespace xinlongyuOfWpf.Controller.ControlController
             //scrollView.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
             //scrollView.Content = _currentForm;
 
-            Page page = new Page();
+            xinlongyuForm page = new xinlongyuForm();
             page.Content = _currentForm;
             page.Width = pageobj.d1;
             page.Height = pageobj.d2;
 
             //返回page
             return page;
+        }
+
+        /// <summary>
+        /// 添加标题栏
+        /// </summary>
+        /// <param name="gridControl"></param>
+        private void AddTitleBar(Grid gridControl)
+        {
+            //设置为两行，一行显示返回按钮以及刷新按钮，另外一行显示内容
+            RowDefinition gridRowTitle = new RowDefinition();
+            gridRowTitle.Height = GridLength.Auto;
+            RowDefinition gridRowContent = new RowDefinition();
+            gridRowContent.Height = new GridLength(1, GridUnitType.Star);
+            gridControl.RowDefinitions.Add(gridRowTitle);
+            gridControl.RowDefinitions.Add(gridRowContent);
+
+            StackPanel gridTitle = new StackPanel();
+            gridTitle.Orientation = Orientation.Horizontal;
+            gridTitle.HorizontalAlignment = HorizontalAlignment.Left;
+            gridTitle.VerticalAlignment = VerticalAlignment.Top;
+            xinlongyuButton btnBack = new xinlongyuButton();
+            //Image imgBack = new Image();
+            //imgBack.Stretch = System.Windows.Media.Stretch.Fill;
+            //imgBack.Source = CommonConverter.ImageToBitMapImage(Properties.Resources.backButton);
+            //btnBack.Content = imgBack;
+            btnBack.Content = "返回";
+            btnBack.Width = 72;
+            btnBack.Height = 36;
+            btnBack.Background = new SolidColorBrush(CommonConverter.ConvertStringToColor("#0080C0"));
+            btnBack.Foreground = new SolidColorBrush(Colors.White);
+            btnBack.Margin = new Thickness(5);
+            xinlongyuButton btnRefresh = new xinlongyuButton();
+            //Image imgRefresh = new Image();
+            //imgRefresh.Stretch = System.Windows.Media.Stretch.Fill;
+            //imgRefresh.Source = CommonConverter.ImageToBitMapImage(Properties.Resources.refresh);
+            //btnRefresh.Content = imgRefresh;
+            btnRefresh.Content = "刷新";
+            btnRefresh.Width = 72;
+            btnRefresh.Height = 36;
+            btnRefresh.Background = new SolidColorBrush(CommonConverter.ConvertStringToColor("#0080C0"));
+            btnRefresh.Foreground = new SolidColorBrush(Colors.White);
+            btnRefresh.Margin = new Thickness(5);
+            gridTitle.Children.Add(btnBack);
+            gridTitle.Children.Add(btnRefresh);
+            gridTitle.SetValue(Grid.RowProperty, 0);
+            gridControl.Children.Add(gridTitle);
         }
 
         /// <summary>
@@ -87,6 +138,7 @@ namespace xinlongyuOfWpf.Controller.ControlController
         {
             IControl control = null;
 
+            #region 根据控件类型实例化相应控件
             if (xinLongyuControlType.buttonType.Equals(obj.ctrl_type))
             {
                 control = new xinlongyuButton();
@@ -96,10 +148,13 @@ namespace xinlongyuOfWpf.Controller.ControlController
             {
                 control = new xinlongyuTextBox();
             }
-            else if (xinLongyuControlType.pageType.Equals(obj.ctrl_type)
-                || xinLongyuControlType.superViewType.Equals(obj.ctrl_type))
+            else if (xinLongyuControlType.superViewType.Equals(obj.ctrl_type))
             {
                 control = new xinlongyuParentControl();
+            }
+            else if (xinLongyuControlType.pageType.Equals(obj.ctrl_type))
+            {
+                control = new xinlongyuPage();
             }
             else if (xinLongyuControlType.imgType.Equals(obj.ctrl_type))
             {
@@ -129,20 +184,25 @@ namespace xinlongyuOfWpf.Controller.ControlController
             {
                 control = new xinlongyuReviewControl();
             }
+            else if (xinLongyuControlType.comboboxMenuType.Equals(obj.ctrl_type))
+            {
+                control = new xinlongyuCombobox();
+            }
+            else if (xinLongyuControlType.cacheType.Equals(obj.ctrl_type))
+            {
+                control = new xinlongyuCacher();
+            }
             else
             {
                 return null;
             }
+            #endregion
 
-            //(control as FrameworkElement).Name  = obj.ctrl_id.ToString();//设置名称标记
-            
+            //设置一些附属的属性
+            (control as FrameworkElement).Name  = ConfigManagerSection.ControlNamePrefix + obj.ctrl_id.ToString();//设置名称标记
             (control as FrameworkElement).VerticalAlignment = VerticalAlignment.Top;
             (control as FrameworkElement).HorizontalAlignment = HorizontalAlignment.Left;
-
             (control as FrameworkElement).Tag = obj;
-
-            this.SetControlProperty(control, obj);
-            
 
             return control;
         }
@@ -192,9 +252,10 @@ namespace xinlongyuOfWpf.Controller.ControlController
         /// <summary>
         /// 生成父控件
         /// </summary>
-        public void ProduceFatherControl(ControlDetailForPage controlObj, List<ControlDetailForPage> listControlObj, List<IControl> listControl, UIElement fatherControl)
+        public void ProduceFatherControl(ControlDetailForPage controlObj, List<ControlDetailForPage> listControlObj, List<IControl> listControl, UIElement fatherControl, bool isNeedSetRow = false)
         {
             IControl newfatherControl = this.ProductChildControl(controlObj, listControl, fatherControl);
+            if (isNeedSetRow) (newfatherControl as FrameworkElement).SetValue(Grid.RowProperty, 1);
 
             //导航栏控件由自身进行初始化
             if (xinLongyuControlType.pcnavigationBarType.Equals(controlObj.ctrl_type))
@@ -202,7 +263,7 @@ namespace xinlongyuOfWpf.Controller.ControlController
                 (newfatherControl as xinlongyuNavigationControl).InitControl(controlObj, listControlObj, listControl);
                 return;
             }
-
+            //表格控件也由自身进行初始化
             if (xinLongyuControlType.PCGrid.Equals(controlObj.ctrl_type))
             {
                 (newfatherControl as xinlongyuDataGird).LoadData(listControlObj, controlObj);
@@ -238,11 +299,12 @@ namespace xinlongyuOfWpf.Controller.ControlController
         public void SetControlEvent(IControl control, ControlDetailForPage controlObj)
         {
             //这里也可以设置成通用的，不过需要对语法进行解析
+            //单击事件
             control.SetP0(controlObj.p0);
             //双击事件
-            control.SetP1(controlObj.p1);
-            //设置长按
-            control.SetP2(controlObj.p2);
+            //control.SetP1(controlObj.p1);
+            ////设置长按
+            //control.SetP2(controlObj.p2);
 
         }
 

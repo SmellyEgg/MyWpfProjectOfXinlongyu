@@ -22,12 +22,15 @@
         </TreeView>
 
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
-            <extension:textBoxWithPlaceHolderText Width="212" Margin="6" x:Name="txtPageId" KeyDown="txtPageId_KeyDown"/>
+            <extension:textBoxWithPlaceHolderText Width="212" Margin="6" x:Name="txtPageId" KeyDown="txtPageId_KeyDown"
+                                                  VerticalAlignment="Center" Height="30"/>
             <Button Style="{DynamicResource ButtonWithRoundedCorner}" 
-                    Content="确定" Background="#0080C0" Margin="6" Width="100" Foreground="White" 
+                    Content="确定" Background="#0080C0" Margin="6" Width="100" Height="30" Foreground="White" 
+                    VerticalAlignment="Center"
                     Click="BtnGetPageVersionClick"/>
             <Button Style="{DynamicResource ButtonWithRoundedCorner}" 
                     Content="刷新树列表" Background="#0080C0" Margin="6" Width="100" 
+                     VerticalAlignment="Center" Height="30"
                     Click="BtnRefreshClick" Foreground="White"/>
         </StackPanel>
 

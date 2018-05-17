@@ -1,12 +1,13 @@
 ﻿using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
-namespace xinlongyuOfWpf.Controller
+namespace xinlongyuOfWpf.Controller.PageController
 {
     /// <summary>
     /// 页面工厂类，负责生成页面
     /// </summary>
-    public class _pageFactory
+    public class PageFactory
     {
         /// <summary>
         /// 页面请求类
@@ -21,7 +22,7 @@ namespace xinlongyuOfWpf.Controller
         /// <summary>
         /// 构造函数
         /// </summary>
-        public _pageFactory()
+        public PageFactory()
         {
             _pageConnection = new PageConnection();
             _pageDecoder = new PageDecoder();
@@ -35,11 +36,10 @@ namespace xinlongyuOfWpf.Controller
         public async Task<Page> ProducePage(int pageId)
         {
             var pageInfo = await _pageConnection.GetPageInfo(pageId);
-
             if (object.Equals(pageInfo, null)) return null;
-
             var page = _pageDecoder.DecodePage(pageInfo);
-
+            //page.HorizontalAlignment = HorizontalAlignment.Stretch;
+            //page.VerticalAlignment = VerticalAlignment.Stretch;
             return page;
         }
 
@@ -61,7 +61,6 @@ namespace xinlongyuOfWpf.Controller
 
             return Task.Run(() => page);
         }
-
 
     }
 }

@@ -3,9 +3,9 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using xinlongyuOfWpf.Controller;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.ControlController;
+using xinlongyuOfWpf.Controller.PageController;
 using xinlongyuOfWpf.Models.GroupInfo;
 
 namespace xinlongyuOfWpf.CustomControls

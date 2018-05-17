@@ -4,9 +4,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Xceed.Wpf.Toolkit;
-using xinlongyuOfWpf.Controller;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.CommonPath;
+using xinlongyuOfWpf.Controller.PageController;
 
 namespace xinlongyuOfWpf
 {
@@ -18,8 +18,11 @@ namespace xinlongyuOfWpf
         /// <summary>
         /// 页面工厂类
         /// </summary>
-        private _pageFactory _pageFactory;
+        private PageFactory _pageFactory;
 
+        /// <summary>
+        /// 打开的页面列表
+        /// </summary>
         private List<Page> _listPageHistory;
 
         /// <summary>
@@ -29,7 +32,7 @@ namespace xinlongyuOfWpf
         {
             InitializeComponent();
 
-            _pageFactory = new _pageFactory();
+            _pageFactory = new PageFactory();
             _listPageHistory = new List<Page>();
             LoadPage();
         }
@@ -57,7 +60,6 @@ namespace xinlongyuOfWpf
         /// </summary>
         Window _winMain;
 
-
         /// <summary>
         /// 加载第一个页面
         /// </summary>
@@ -73,7 +75,10 @@ namespace xinlongyuOfWpf
             _winMain.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             //加载默认的第一个页面
             int pageId = GetFirstPageID();
-            ShowWaitingForm();
+            //
+            pageId = 1001;
+            //
+            CommonFunction.ShowWaitingForm(_winMain);
             await this.Refresh(pageId);
         }
 
@@ -104,11 +109,11 @@ namespace xinlongyuOfWpf
                 isNeedToAdd = false;
             }
             //暂停显示按钮
-            if (!object.Equals(btControl, null))
-            {
-                btControl.IsBusy = false;
-                btControl = null;
-            }
+            //if (!object.Equals(btControl, null))
+            //{
+            //    btControl.IsBusy = false;
+            //    btControl = null;
+            //}
             _winMain.Content = null;
             _winMain.Content = page;
 
@@ -116,11 +121,12 @@ namespace xinlongyuOfWpf
 
             
             _winMain.Width = page.Width;
-            _winMain.Height = page.Height;
+            _winMain.Height = page.Height + ConfigManagerSection.TitleBarHeight;
 
             _winMain.Closed -= Win_Closed;
             _winMain.Closed += Win_Closed;
 
+            _winMain.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             //_winMain.Show();
             return 1;
         }
@@ -142,7 +148,7 @@ namespace xinlongyuOfWpf
         /// <param name="e"></param>
         private void Window_Closed(object sender, EventArgs e)
         {
-            _winMain = null;
+            //_winMain = null;
         }
     }
 }

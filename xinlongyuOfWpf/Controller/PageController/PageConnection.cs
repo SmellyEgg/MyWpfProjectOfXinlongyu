@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.CommonType;
-using xinlongyuOfWpf.Controller.OtherController;
 using xinlongyuOfWpf.Models.GroupInfo;
 using xinlongyuOfWpf.Models.PageInfo;
 using xinlongyuOfWpf.Models.Request;
 using xinlongyuOfWpf.Models.Return;
 
-namespace xinlongyuOfWpf.Controller
+namespace xinlongyuOfWpf.Controller.PageController
 {
     public class PageConnection : BaseConnection
     {
@@ -39,7 +38,7 @@ namespace xinlongyuOfWpf.Controller
         public async Task<PageInfoDetail> GetPageInfo(int pageId)
         {
             //string pageVersion = string.IsNullOrEmpty(LocalCacher.GetCache("page_version")) ? "0" : LocalCacher.GetCache("page_version");
-            string pageVersion = "2";
+            string pageVersion = "0";
             BaseRequest bj = this.GetPageRequest(pageId, pageVersion);
             try
             {

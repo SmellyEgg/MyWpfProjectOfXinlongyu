@@ -6,6 +6,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.ControlController;
+using xinlongyuOfWpf.Controller.EventController;
 
 namespace xinlongyuOfWpf.CustomControls
 {
@@ -49,7 +50,7 @@ namespace xinlongyuOfWpf.CustomControls
         /// <param name="value"></param>
         public void SetD6(string value)
         {
-            if (!string.IsNullOrEmpty(value.Trim()))
+            if (!string.IsNullOrEmpty(value.Trim()) )
             {
                 Font font = JsonController.DeSerializeToClass<Font>(value);
                 this.FontStyle = font.Style == System.Drawing.FontStyle.Italic ? FontStyles.Italic : FontStyles.Normal;
@@ -57,7 +58,7 @@ namespace xinlongyuOfWpf.CustomControls
                 this.FontSize = font.Size;
                 this.FontWeight = font.Bold ? FontWeights.Bold : FontWeights.Normal;
             }
-            
+
         }
 
         /// <summary>
@@ -130,6 +131,35 @@ namespace xinlongyuOfWpf.CustomControls
                 default:
                     break;
             }
+        }
+
+        /// <summary>
+        /// 单击事件命令
+        /// </summary>
+        private string _clickEvent = string.Empty;
+
+        /// <summary>
+        /// 设置按钮的单击事件
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetP0(string value)
+        {
+            //string test = value;
+            if (!string.IsNullOrEmpty(value))
+            {
+                _clickEvent = value;
+            }
+            this.Click += XinlongyuButton_Click;
+        }
+
+        private void XinlongyuButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(_clickEvent))
+            {
+                //MessageBox.Show(_clickEvent);
+                EventAssitant.CallEventDerectly(_clickEvent, this);
+            }
+            //throw new System.NotImplementedException();
         }
     }
 }

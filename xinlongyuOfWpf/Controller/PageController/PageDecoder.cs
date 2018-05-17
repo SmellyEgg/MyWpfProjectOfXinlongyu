@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.CommonType;
 using xinlongyuOfWpf.Controller.ControlController;
+using xinlongyuOfWpf.CustomControls;
 using xinlongyuOfWpf.Models.ControlInfo;
 using xinlongyuOfWpf.Models.PageInfo;
 
-namespace xinlongyuOfWpf.Controller
+namespace xinlongyuOfWpf.Controller.PageController
 {
     /// <summary>
     /// 页面解析类
@@ -25,8 +27,12 @@ namespace xinlongyuOfWpf.Controller
             _controlDecode = new ControlDecoder();
         }
 
-        //解析页面信息
-        public Page DecodePage(PageInfoDetail pageObj)
+        /// <summary>
+        /// 页面实体解析成页面类
+        /// </summary>
+        /// <param name="pageObj"></param>
+        /// <returns></returns>
+        public xinlongyuForm DecodePage(PageInfoDetail pageObj)
         {
             //页面基本信息
             PageBaseInfo dtObj = pageObj.data;
@@ -58,7 +64,7 @@ namespace xinlongyuOfWpf.Controller
         /// </summary>
         /// <param name="frm"></param>
         /// <param name="listControlObject"></param>
-        private Page DecodeListControlObj(List<ControlDetailForPage> listControlObject)
+        private xinlongyuForm DecodeListControlObj(List<ControlDetailForPage> listControlObject)
         {
             int pageIndex = listControlObject.FindIndex(p => xinLongyuControlType.pageType.Equals(p.ctrl_type));
             if (pageIndex == -1)
@@ -75,21 +81,21 @@ namespace xinlongyuOfWpf.Controller
             }
             //界面控件数组
             List<IControl> listControl = new List<IControl>();
-
             var page = _controlDecode.ProduceControl(pageControl, listControl, listControlObject);
             //设置页面控件基本属性
-            //foreach (IControl control in listControl)
-            //{
-            //    ControlDetailForPage controlObj = (control as FrameworkElement).Tag as ControlDetailForPage;
-            //    try
-            //    {
-            //        _controlDecode.SetControlProperty(control, controlObj);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Logging.Error("设置控件属性出错type:" + controlObj.ctrl_type + "--" + ex.Message);
-            //    }
-            //}
+            foreach (IControl control in listControl)
+            {
+                ControlDetailForPage controlObj = (control as FrameworkElement).Tag as ControlDetailForPage;
+                _controlDecode.SetControlProperty(control, controlObj);
+            }
+
+            //设置控件基本事件
+            foreach (IControl control in listControl)
+            {
+                _controlDecode.SetControlEvent(control, (control as FrameworkElement).Tag as ControlDetailForPage);
+            }
+            page._currentControlList = listControl;
+            page._currentControlObjList = listControlObject;
 
             return page;
 
@@ -98,8 +104,6 @@ namespace xinlongyuOfWpf.Controller
 
             //List<IControl> tempobj = listControl;
             
-            
-
             ////设置控件基本事件
             //foreach (IControl control in listControl)
             //{

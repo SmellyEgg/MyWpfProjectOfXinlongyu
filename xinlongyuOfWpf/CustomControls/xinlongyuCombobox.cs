@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Controls;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.ControlController;
@@ -20,11 +16,12 @@ namespace xinlongyuOfWpf.CustomControls
 
         public xinlongyuCombobox()
         {
+            //设置样式
+            this.SetResourceReference(Control.StyleProperty, "RoundedCornerCombobox");
+            this.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
             //不能让用户寄几进行输入
             this.IsEditable = false;
-            //
             this.SelectionChanged += XinlongyuCombobox_SelectedIndexChanged;
-            //
             _listValue = new List<string>();
         }
 
@@ -93,7 +90,6 @@ namespace xinlongyuOfWpf.CustomControls
                             this.ItemsSource = array;
                             if (System.Text.RegularExpressions.Regex.IsMatch(currentObj.d5.Trim().Replace("\r\n", string.Empty), @".*\[.*\].*"))
                             {
-                                //_listValue.AddRange(CommonFunction.StringToArray(currentObj.d5.Trim().Replace("\r\n", string.Empty)));
                                 _listValue.AddRange(JsonController.DeSerializeToClass<string[]>(currentObj.d5.Trim()));
                             }
                         }

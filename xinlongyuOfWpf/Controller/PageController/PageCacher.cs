@@ -5,7 +5,7 @@ using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Models.ControlInfo;
 using xinlongyuOfWpf.Models.PageInfo;
 
-namespace xinlongyuOfWpf.Controller
+namespace xinlongyuOfWpf.Controller.PageController
 {
     /// <summary>
     /// 页面缓存类

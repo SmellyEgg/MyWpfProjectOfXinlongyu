@@ -71,6 +71,7 @@
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="Smith.WPF.HtmlEditor">
       <HintPath>bin\Debug\ExternalDll\Smith.WPF.HtmlEditor.dll</HintPath>
     </Reference>
@@ -129,6 +130,7 @@
     </ApplicationDefinition>
     <Compile Include="Controller\CommonController\BaseConnection.cs" />
     <Compile Include="Controller\CommonController\CommonConverter.cs" />
+    <Compile Include="Controller\CommonController\CommonFunction.cs" />
     <Compile Include="Controller\CommonController\ControlCaster.cs" />
     <Compile Include="Controller\CommonController\dataBaseController.cs" />
     <Compile Include="Controller\CommonController\ClassToXml.cs" />
@@ -145,11 +147,14 @@
     <Compile Include="Controller\ControlController\ReviewToOnlineStateConverter.cs" />
     <Compile Include="Controller\ControlController\SmsController.cs" />
     <Compile Include="Controller\ControlController\UIHelper.cs" />
+    <Compile Include="Controller\EventController\EventAssitant.cs" />
+    <Compile Include="Controller\EventController\EventDecoder.cs" />
+    <Compile Include="Controller\EventController\EventType.cs" />
     <Compile Include="Controller\OtherController\LocalCacher.cs" />
-    <Compile Include="Controller\PageCacher.cs" />
-    <Compile Include="Controller\PageConnection.cs" />
-    <Compile Include="Controller\PageDecoder.cs" />
-    <Compile Include="Controller\PageFactory.cs" />
+    <Compile Include="Controller\PageController\PageCacher.cs" />
+    <Compile Include="Controller\PageController\PageConnection.cs" />
+    <Compile Include="Controller\PageController\PageDecoder.cs" />
+    <Compile Include="Controller\PageController\PageFactory.cs" />
     <Page Include="CustomControls\Extension\FrmColumnSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -319,9 +324,6 @@
     <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\back.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\close.png" />
   </ItemGroup>
   <ItemGroup>
@@ -336,6 +338,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\picture.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\backButton.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\refresh.png" />

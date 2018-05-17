@@ -1,5 +1,4 @@
-﻿
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Navigation;
 using xinlongyuOfWpf.Controller.ControlController;
 using xinlongyuOfWpf.Models.ControlInfo;

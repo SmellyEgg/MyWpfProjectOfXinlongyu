@@ -82,16 +82,16 @@ namespace xinlongyuOfWpf.Controller.ControlController
             //这里增加一个判断流程是为了兼容字体样式之前的版本，防止需要全部回去修改配置
             if (!string.IsNullOrEmpty(text))
             {
-                if (ExcuteClassMethodByname(inControl, "SetD6", text) == ReturnConst.CancleReturn)
+                try
                 {
-                    try
-                    {
-                        //(inControl as UIElement). = JsonController.DeSerializeToClass<FontFamily>(text);
-                    }
-                    catch
-                    {
-                    }
+                    if (!string.IsNullOrEmpty(text) && CommonConverter.StringToInt(text) == -1)
+                        ExcuteClassMethodByname(inControl, "SetD6", text);
                 }
+                catch
+                { }
+                //if (ExcuteClassMethodByname(inControl, "SetD6", text) == ReturnConst.CancleReturn)
+                //{
+                //}
             }
         }
 

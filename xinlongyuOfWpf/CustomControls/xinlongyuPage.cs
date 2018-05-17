@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.ControlController;
+using xinlongyuOfWpf.Controller.PageController;
 using xinlongyuOfWpf.Models.ControlInfo;
 
 namespace xinlongyuOfWpf.CustomControls
@@ -59,7 +60,7 @@ namespace xinlongyuOfWpf.CustomControls
         /// <returns></returns>
         public object SetA4(object value)
         {
-            Window.GetWindow(this).WindowState = WindowState.Minimized;
+            //Window.GetWindow(this).WindowState = WindowState.Minimized;
             return null;
         }
 
@@ -69,7 +70,8 @@ namespace xinlongyuOfWpf.CustomControls
         /// <param name="inText"></param>
         public object SetA5(string inText)
         {
-            //根据id跳转页面
+            bool isDialog = false;
+            OpenPage(inText, isDialog);
             return null;
         }
 
@@ -88,11 +90,20 @@ namespace xinlongyuOfWpf.CustomControls
         /// </summary>
         /// <param name="inText"></param>
         /// <param name="isDialog"></param>
-        private void OpenPage(string inText, bool isDialog)
+        private async void OpenPage(string inText, bool isDialog)
         {
             int pageId = CommonConverter.StringToInt(inText);
             if (pageId != -1)
             {
+                var window = Window.GetWindow(this);
+                CommonFunction.ShowWaitingForm(window);
+                PageFactory pagefactory = new PageFactory();
+                var page = await pagefactory.ProducePage(pageId);
+                window.Content = null;
+                window.Content = page;
+                window.Width = page.Width;
+                window.Height = page.Height;
+                //window.ShowDialog();
                 //pageController.CreatePage(pageId, isDialog, isNeedThread, null);
             }
             //接下来是有传值的方法，格式应该是类似(1236, text={1.d0}&type=animal)
