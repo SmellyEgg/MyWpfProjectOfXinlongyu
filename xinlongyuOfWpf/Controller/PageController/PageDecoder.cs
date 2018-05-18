@@ -99,22 +99,6 @@ namespace xinlongyuOfWpf.Controller.PageController
 
             return page;
 
-            //frm._currentControlObjList = listControlObject;
-            //frm._currentControlList = listControl;
-
-            //List<IControl> tempobj = listControl;
-            
-            ////设置控件基本事件
-            //foreach (IControl control in listControl)
-            //{
-            //    _controlDecode.SetControlEvent(control, (control as Control).Tag as ControlDetailForPage);
-            //}
-            ////DecoderAssistant.CurrentControlList = tempobj;
-            ////DecoderAssistant.CurrentControlObjList = DecoderAssistant.DicOfAllControlObj[frm.Name];
-
-            ////DecoderAssistant.CurrentControlList = (frm as xinlongyuForm)._currentControlList;
-            ////DecoderAssistant.CurrentControlObjList = (frm as xinlongyuForm)._currentControlObjList;
-
             ////页面初始化事件
             //IControl page = listControl.First(p => ((p as Control).Tag as ControlDetailForPage).ctrl_type.Equals(xinLongyuControlType.pageType));
             //page.SetP7(((page as Control).Tag as ControlDetailForPage).p7);

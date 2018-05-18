@@ -46,7 +46,7 @@ namespace xinlongyuOfWpf.CustomControls
         /// <param name="text"></param>
         public void SetA1(string text)
         {
-            MessageBox.Show(text, "提示");
+            MessageBox.Show(_text, "提示");
         }
 
 

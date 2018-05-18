@@ -72,8 +72,8 @@ namespace xinlongyuOfWpf.Controller.ControlController
 
             //实现窗体的滚动条
             //ScrollViewer scrollView = new ScrollViewer();
-            //scrollView.HorizontalAlignment = HorizontalAlignment.Stretch;
-            //scrollView.VerticalAlignment = VerticalAlignment.Stretch;
+            ////scrollView.HorizontalAlignment = HorizontalAlignment.Stretch;
+            ////scrollView.VerticalAlignment = VerticalAlignment.Stretch;
             //scrollView.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
             //scrollView.Content = _currentForm;
 
@@ -154,6 +154,7 @@ namespace xinlongyuOfWpf.Controller.ControlController
             };
             //刷新事件
             btnRefresh.Click += async (s, e) => {
+                
                 var window = Window.GetWindow(btnRefresh);
                 var page = window.Content as xinlongyuForm;
                 var listPage = window.Tag as List<Page>;
@@ -165,10 +166,11 @@ namespace xinlongyuOfWpf.Controller.ControlController
                     MessageBox.Show("刷新成功");
                 }
             };
-            //
+            //这里不考虑处于导航栏中的情况，直接隐藏这两个按钮
             if (isNavigationWindow)
             {
                 btnBack.Visibility = Visibility.Hidden;
+                btnRefresh.Visibility = Visibility.Hidden;
             }
         }
 
@@ -235,6 +237,18 @@ namespace xinlongyuOfWpf.Controller.ControlController
             {
                 control = new xinlongyuCacher();
             }
+            else if (xinLongyuControlType.tooltipType.Equals(obj.ctrl_type))
+            {
+                control = new xinlongyuToolTip();
+            }
+            else if (xinLongyuControlType.LogicJudgmentType.Equals(obj.ctrl_type))
+            {
+                control = new xinlongyuLogicControl();
+            }
+            else if (xinLongyuControlType.getDataType.Equals(obj.ctrl_type))
+            {
+                control = new xinlongyuGetData();
+            }
             else
             {
                 return null;
@@ -256,6 +270,7 @@ namespace xinlongyuOfWpf.Controller.ControlController
         private IControl ProductChildControl(ControlDetailForPage controlObj, List<IControl> listControl, UIElement fatherControl)
         {
             IControl control = this.GetIControl(controlObj);
+            if (object.Equals(control, null)) return null;
             listControl.Add(control);
 
             #region 判断类型

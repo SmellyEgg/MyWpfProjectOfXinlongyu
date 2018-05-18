@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.ControlController;
+using xinlongyuOfWpf.Controller.EventController;
 using xinlongyuOfWpf.Models.ControlInfo;
 using xinlongyuOfWpf.Models.DecodeModel;
 
@@ -32,16 +33,16 @@ namespace xinlongyuOfWpf.CustomControls
                 dct.CtrlId = int.Parse(this.Name);
                 dct.RightDirectValue = (this.Tag as ControlDetailForPage).d0;
                 //执行d0sql的数据获取
-                //if (DecoderAssistant.dealWithSqlRequest(dct, this))
-                //{
-                //    //触发后触发的事件
-                //    DecoderAssistant.CallEventDerectly((this.Tag as ControlDetailForPage).p9, this);
-                //}
-                //else
-                //{
-                //    //触发后触发的事件
-                //    DecoderAssistant.CallEventDerectly((this.Tag as ControlDetailForPage).p12, this);
-                //}
+                if (EventAssitant.dealWithSqlRequest(dct, this))
+                {
+                    //触发后触发的事件
+                    EventAssitant.CallEventDerectly((this.Tag as ControlDetailForPage).p9, this);
+                }
+                else
+                {
+                    //触发后触发的事件
+                    EventAssitant.CallEventDerectly((this.Tag as ControlDetailForPage).p12, this);
+                }
             }
             catch (Exception ex)
             {

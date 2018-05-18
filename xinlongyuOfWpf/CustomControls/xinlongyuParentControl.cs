@@ -44,19 +44,16 @@ namespace xinlongyuOfWpf.CustomControls
                 return;
             }
             _currentPageId = pageId;
-
-            //var window = new Window();
-            Frame frame = new Frame();
             var page = await _pageFactory.ProducePage(_currentPageId, true);
-            page.HorizontalAlignment = HorizontalAlignment.Stretch;
-            page.VerticalAlignment = VerticalAlignment.Stretch;
+            if (object.Equals(page, null)) return;
+            Frame frame = new Frame();
+            page.HorizontalAlignment = HorizontalAlignment.Left;
+            page.VerticalAlignment = VerticalAlignment.Top;
             frame.Content = page;
-            //frame.Content = window;
             frame.Width = page.Width;
             frame.Height = page.Height;
             frame.VerticalAlignment = VerticalAlignment.Top;
             frame.HorizontalAlignment = HorizontalAlignment.Left;
-            //window.Content = page;
             this.Children.Clear();
             this.Children.Add(frame);
         }

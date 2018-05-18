@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.CommonType;
+using xinlongyuOfWpf.Controller.EventController;
 using xinlongyuOfWpf.Models.ControlInfo;
 
 namespace xinlongyuOfWpf.Controller.ControlController
@@ -495,7 +496,7 @@ namespace xinlongyuOfWpf.Controller.ControlController
         {
             if (ExcuteClassMethodByname(inControl, "SetP9", eventText) == ReturnConst.CancleReturn)
             {
-                //DecoderAssistant.CallEventDerectly(eventText, inControl);
+                EventAssitant.CallEventDerectly(eventText, inControl);
             }
         }
 
@@ -509,7 +510,7 @@ namespace xinlongyuOfWpf.Controller.ControlController
         {
             if (ExcuteClassMethodByname(inControl, "SetP12", eventText) == ReturnConst.CancleReturn)
             {
-                //DecoderAssistant.CallEventDerectly(eventText, inControl);
+                EventAssitant.CallEventDerectly(eventText, inControl);
             }
         }
 

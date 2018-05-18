@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.ControlController;
+using xinlongyuOfWpf.Controller.EventController;
 using xinlongyuOfWpf.Models.ControlInfo;
 
 namespace xinlongyuOfWpf.CustomControls
@@ -72,11 +73,11 @@ namespace xinlongyuOfWpf.CustomControls
             string rightPart = rightValue;
             if (Regex.IsMatch(leftValue, @"[{].*[}]"))
             {
-                //leftPart = DecoderAssistant.FormatSql(leftPart, this);
+                leftPart = EventAssitant.FormatSql(leftPart, this);
             }
             if (Regex.IsMatch(rightValue, @"[{].*[}]"))
             {
-                //rightPart = DecoderAssistant.FormatSql(rightPart, this);
+                rightPart = EventAssitant.FormatSql(rightPart, this);
             }
 
             bool isSuccess = false;
@@ -128,7 +129,7 @@ namespace xinlongyuOfWpf.CustomControls
 
         private string GetValue(string controlId, string property)
         {
-            Window parentWindow = Window.GetWindow(this);
+            //Window parentWindow = Window.GetWindow(this);
             return string.Empty;
             //xinlongyuForm frm = this.FindForm() as xinlongyuForm;
             //DecoderAssistant.CurrentControlList = frm._currentControlList;

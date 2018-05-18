@@ -54,7 +54,8 @@ namespace xinlongyuOfWpf.Controller.EventController
         /// <param name="ic"></param>
         private static void SetCurrentControlList(IControl ic)
         {
-            var page= Window.GetWindow(ic as UIElement).Content as xinlongyuForm;
+            //var page= Window.GetWindow(ic as UIElement).Content as xinlongyuForm;
+            var page = CommonFunction.GetPageByControl(ic as FrameworkElement);
             CurrentControlList = page._currentControlList;
             CurrentControlObjList = page._currentControlObjList;
         }

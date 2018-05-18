@@ -152,14 +152,17 @@ namespace xinlongyuOfWpf.CustomControls
             this.Click += XinlongyuButton_Click;
         }
 
+        /// <summary>
+        /// 执行触发事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void XinlongyuButton_Click(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrEmpty(_clickEvent))
             {
-                //MessageBox.Show(_clickEvent);
                 EventAssitant.CallEventDerectly(_clickEvent, this);
             }
-            //throw new System.NotImplementedException();
         }
     }
 }

@@ -46,6 +46,11 @@ namespace xinlongyuOfWpf.CustomControls.Extension
         /// </summary>
         private int _rowCount = 0;
 
+        /// <summary>
+        /// 数据源
+        /// </summary>
+        private List<Dictionary<string, string>> _currentDataSource;
+
         public MyDataGridControl()
         {
             InitializeComponent();
@@ -80,6 +85,9 @@ namespace xinlongyuOfWpf.CustomControls.Extension
             //var sql = obj.d0;
             var dicarray = _sqlController.ExcuteSqlWithReturn(sql).data;
             if (object.Equals(dicarray, null)) return;
+            //每次都清空然后添加到数据源中
+            _currentDataSource = new List<Dictionary<string, string>>();
+            _currentDataSource.AddRange(dicarray);
             //var dicarray = dicresult.Result.data;
             var listsource = DicArrayToListObject(dicarray);
 
@@ -607,7 +615,25 @@ namespace xinlongyuOfWpf.CustomControls.Extension
         /// <param name="e"></param>
         private void DataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
         {
-            e.Row.Header = (e.Row.GetIndex() + (_currentPageIndex - 1) * _pageSize).ToString();
+            //e.Row.Header = (e.Row.GetIndex() + (_currentPageIndex - 1) * _pageSize + 1).ToString();
+        }
+
+        /// <summary>
+        /// 获取表格中的值
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public object GetDataFromDatagrid(string parameter)
+        {
+            var currentRowIndex = mydatagridview.Items.IndexOf(mydatagridview.CurrentItem);
+            if (currentRowIndex != -1 && !object.Equals(_currentDataSource, null) && _currentDataSource.Count > 0)
+            {
+                if (_currentDataSource[currentRowIndex].ContainsKey(parameter))
+                {
+                    return _currentDataSource[currentRowIndex][parameter];
+                }
+            }
+            return string.Empty;
         }
     }
 }

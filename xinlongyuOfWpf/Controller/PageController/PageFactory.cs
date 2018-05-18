@@ -66,7 +66,7 @@ namespace xinlongyuOfWpf.Controller.PageController
         /// </summary>
         /// <param name="window"></param>
         /// <param name="pageId"></param>
-        public async Task ShowPage(Window window, int pageId, List<Page> listPage)
+        public async Task ShowPage(ContentControl window, int pageId, List<Page> listPage)
         {
             //window.Content = null;
             var page = await ProducePage(pageId);
@@ -76,11 +76,16 @@ namespace xinlongyuOfWpf.Controller.PageController
             }
             window.Content = null;
             window.Content = page;
-            listPage.Add(page);
+            //listPage.Add(page);
             window.Width = page.Width;
             window.Height = page.Height + ConfigManagerSection.TitleBarHeight;
            
-            window.Show();
+            if (window.GetType() == typeof(Window))
+            {
+                listPage.Add(page);
+                (window as Window).Show();
+            }
+            
         }
 
         
