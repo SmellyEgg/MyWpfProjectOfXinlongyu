@@ -32,7 +32,7 @@ namespace xinlongyuOfWpf.Controller.PageController
         /// </summary>
         /// <param name="pageObj"></param>
         /// <returns></returns>
-        public xinlongyuForm DecodePage(PageInfoDetail pageObj)
+        public xinlongyuForm DecodePage(PageInfoDetail pageObj, bool isNavigationWindow)
         {
             //页面基本信息
             PageBaseInfo dtObj = pageObj.data;
@@ -50,7 +50,7 @@ namespace xinlongyuOfWpf.Controller.PageController
                     return null;
                 }
 
-                return this.DecodeListControlObj(listControlObject);
+                return this.DecodeListControlObj(listControlObject, isNavigationWindow);
             }
             catch (Exception ex)
             {
@@ -64,7 +64,7 @@ namespace xinlongyuOfWpf.Controller.PageController
         /// </summary>
         /// <param name="frm"></param>
         /// <param name="listControlObject"></param>
-        private xinlongyuForm DecodeListControlObj(List<ControlDetailForPage> listControlObject)
+        private xinlongyuForm DecodeListControlObj(List<ControlDetailForPage> listControlObject, bool isNavigationWindow)
         {
             int pageIndex = listControlObject.FindIndex(p => xinLongyuControlType.pageType.Equals(p.ctrl_type));
             if (pageIndex == -1)
@@ -81,7 +81,7 @@ namespace xinlongyuOfWpf.Controller.PageController
             }
             //界面控件数组
             List<IControl> listControl = new List<IControl>();
-            var page = _controlDecode.ProduceControl(pageControl, listControl, listControlObject);
+            var page = _controlDecode.ProduceControl(pageControl, listControl, listControlObject, isNavigationWindow);
             //设置页面控件基本属性
             foreach (IControl control in listControl)
             {

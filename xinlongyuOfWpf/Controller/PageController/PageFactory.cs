@@ -35,11 +35,11 @@ namespace xinlongyuOfWpf.Controller.PageController
         /// </summary>
         /// <param name="pageId">页面ID</param>
         /// <returns></returns>
-        private async Task<Page> ProducePage(int pageId)
+        public async Task<Page> ProducePage(int pageId, bool IsNavigationWindow = false)
         {
             var pageInfo = await _pageConnection.GetPageInfo(pageId);
             if (object.Equals(pageInfo, null)) return null;
-            var page = _pageDecoder.DecodePage(pageInfo);
+            var page = _pageDecoder.DecodePage(pageInfo, IsNavigationWindow);
             return page;
         }
 
@@ -70,7 +70,10 @@ namespace xinlongyuOfWpf.Controller.PageController
         {
             //window.Content = null;
             var page = await ProducePage(pageId);
-            if (object.Equals(page, null)) return;
+            if (object.Equals(page, null))
+            {
+                page = await GetDefaultPage();
+            }
             window.Content = null;
             window.Content = page;
             listPage.Add(page);

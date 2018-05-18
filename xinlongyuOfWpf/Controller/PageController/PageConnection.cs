@@ -38,7 +38,7 @@ namespace xinlongyuOfWpf.Controller.PageController
         public async Task<PageInfoDetail> GetPageInfo(int pageId)
         {
             //string pageVersion = string.IsNullOrEmpty(LocalCacher.GetCache("page_version")) ? "0" : LocalCacher.GetCache("page_version");
-            string pageVersion = "0";
+            string pageVersion = "3";
             BaseRequest bj = this.GetPageRequest(pageId, pageVersion);
             try
             {
@@ -90,8 +90,8 @@ namespace xinlongyuOfWpf.Controller.PageController
         /// <returns></returns>
         private BaseRequest GetPageRequest(int pageId, string pageVersion)
         {
-            int timestamp = _pageCacher.GetTimeStampOfPage(pageId);
-            //int timestamp = 0;
+            //int timestamp = _pageCacher.GetTimeStampOfPage(pageId);
+            int timestamp = 0;
             string apitype = JsonApiType.page;
             BaseRequest bj = this.GetCommonBaseRequest(apitype);
             //string pageVersion = "4";

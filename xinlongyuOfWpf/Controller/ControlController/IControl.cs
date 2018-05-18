@@ -194,7 +194,8 @@ namespace xinlongyuOfWpf.Controller.ControlController
         /// <param name="text"></param>
         public static void SetD10<T>(this T inControl, string backcolorText, string fontColortext) where T : IControl
         {
-            if (!(inControl as FrameworkElement).Visibility.Equals(System.Windows.Visibility.Visible)) return;
+            //if (!(inControl as FrameworkElement).Visibility.Equals(System.Windows.Visibility.Visible)) return;
+
             //暂时不进行处理
             //Color originalColor = (inControl as FrameworkElement).Background;
             //Color originalFont = (inControl as FrameworkElement).ForeColor;

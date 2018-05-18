@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using Xceed.Wpf.Toolkit;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.CommonPath;
 using xinlongyuOfWpf.Controller.PageController;
@@ -107,17 +106,13 @@ namespace xinlongyuOfWpf
         /// <param name="e"></param>
         private void Win_Closed(object sender, EventArgs e)
         {
+            //释放一些资源，不知道有没有用
+            _winMain = null;
+            _pageFactory = null;
+            _listPageHistory.Clear();
+            _listPageHistory = null;
             this.Close();
         }
 
-        /// <summary>
-        /// 释放资源，不知道有没有用
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            //_winMain = null;
-        }
     }
 }

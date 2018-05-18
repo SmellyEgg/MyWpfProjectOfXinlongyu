@@ -51,10 +51,10 @@ namespace xinlongyuOfWpf.Controller.ControlController
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public xinlongyuForm ProduceControl(ControlDetailForPage pageobj, List<IControl> listControl, List<ControlDetailForPage> listControlObj)
+        public xinlongyuForm ProduceControl(ControlDetailForPage pageobj, List<IControl> listControl, List<ControlDetailForPage> listControlObj, bool isNavigationWindow)
         {
             Grid _currentForm = new Grid();
-            AddTitleBar(_currentForm);
+            AddTitleBar(_currentForm, isNavigationWindow);
             if (_fatherControlList.Contains(pageobj.ctrl_type))
             {
                 this.ProduceFatherControl(pageobj, listControlObj, listControl, _currentForm, true);
@@ -90,7 +90,7 @@ namespace xinlongyuOfWpf.Controller.ControlController
         /// 添加标题栏
         /// </summary>
         /// <param name="gridControl"></param>
-        private void AddTitleBar(Grid gridControl)
+        private void AddTitleBar(Grid gridControl, bool isNavigationWindow)
         {
             //设置为两行，一行显示返回按钮以及刷新按钮，另外一行显示内容
             RowDefinition gridRowTitle = new RowDefinition();
@@ -165,6 +165,11 @@ namespace xinlongyuOfWpf.Controller.ControlController
                     MessageBox.Show("刷新成功");
                 }
             };
+            //
+            if (isNavigationWindow)
+            {
+                btnBack.Visibility = Visibility.Hidden;
+            }
         }
 
         /// <summary>
@@ -310,8 +315,9 @@ namespace xinlongyuOfWpf.Controller.ControlController
 
             //获取子控件列表
             string controlList = _D0FatherControlList.Contains(controlObj.ctrl_type) ? controlObj.d0 : controlObj.d17;
+            if (string.IsNullOrEmpty(controlList)) return;
             List<int> controlIdList = JsonController.DeSerializeToClass<List<int>>(controlList);
-            if (controlIdList.Count < 1)
+            if (object.Equals(controlIdList, null) || controlIdList.Count < 1)
             {
                 return;
             }

@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.ControlController;
+using xinlongyuOfWpf.Controller.EventController;
 using xinlongyuOfWpf.Models.ControlInfo;
 
 namespace xinlongyuOfWpf.CustomControls
@@ -32,14 +33,12 @@ namespace xinlongyuOfWpf.CustomControls
         /// <param name="e"></param>
         private void XinlongyuCombobox_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            //throw new System.NotImplementedException();
             if (this.SelectedIndex != -1)
             {
                 string p9 = (this.Tag as ControlDetailForPage).p9;
                 if (!string.IsNullOrEmpty(p9))
                 {
-                    //暂时注释
-                    //DecoderAssistant.CallEventDerectly(p9, this);
+                    EventAssitant.CallEventDerectly(p9, this);
                 }
             }
         }
@@ -101,8 +100,7 @@ namespace xinlongyuOfWpf.CustomControls
                             }
                             //sql处理
                             SqlController cn = new SqlController();
-                            //暂时注释
-                            //value = DecoderAssistant.FormatSql(value.ToString(), this);
+                            value = EventAssitant.FormatSql(value.ToString(), this);
                             var returnDic = cn.ExcuteSqlWithReturn(value.ToString().Trim());
                             var result = returnDic.data;
                             if (!object.Equals(result, null) && result.Length > 0)

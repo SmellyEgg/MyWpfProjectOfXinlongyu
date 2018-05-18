@@ -17,6 +17,7 @@ namespace xinlongyuOfWpf.CustomControls
         public xinlongyuNavigationControl()
         {
             //this.BorderThickness = new Thickness(1);
+            this.BorderThickness = new Thickness(0);
         }
 
         /// <summary>
@@ -48,11 +49,24 @@ namespace xinlongyuOfWpf.CustomControls
                 {
                     TreeViewItem childItem = new TreeViewItem();
                     childItem.Header = ProduceTreeviewItem(listControlObj, listControl, itemObj);
+                    childItem.Tag = itemObj;
+                    childItem.MouseDoubleClick += ChildItem_MouseDoubleClick;
                     itemGroup.Items.Add(childItem);
                 }
 
                 this.Items.Add(itemGroup);
             }
+        }
+
+        /// <summary>
+        /// 子节点的双击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ChildItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var item = (sender as TreeViewItem).Tag as ControlDetailForPage;
+            Controller.EventController.EventAssitant.CallEventDerectly(item.p0, this);
         }
 
         /// <summary>
@@ -68,8 +82,6 @@ namespace xinlongyuOfWpf.CustomControls
             ControlDetailForPage gridObj = listControlObj.Where(p => listChild.Contains(p.ctrl_id)).ToList()[0];
             ControlDecoder controlDecoder = new ControlDecoder();
             xinlongyuParentControl parentControl = new xinlongyuParentControl();
-            //StackPanel parentControl = new StackPanel();
-            //parentControl.Orientation = Orientation.Horizontal;
             controlDecoder.ProduceFatherControl(gridObj, listControlObj, listControl, parentControl);
             parentControl.Width = 200;
             parentControl.Height = 50;
