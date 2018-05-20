@@ -83,6 +83,7 @@ namespace xinlongyuOfWpf.Controller.PageController
             if (window.GetType() == typeof(Window))
             {
                 listPage.Add(page);
+                (window as Window).Title = page.Title;
                 (window as Window).Show();
             }
             

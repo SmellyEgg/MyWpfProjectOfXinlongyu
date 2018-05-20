@@ -50,7 +50,9 @@ namespace xinlongyuOfWpf.Controller.PageController
                     return null;
                 }
 
-                return this.DecodeListControlObj(listControlObject, isNavigationWindow);
+                var page = this.DecodeListControlObj(listControlObject, isNavigationWindow);
+                if (!object.Equals(page, null)) page.Title = pageObj.data.page_name;//设置标题
+                return page;
             }
             catch (Exception ex)
             {
@@ -69,7 +71,7 @@ namespace xinlongyuOfWpf.Controller.PageController
             int pageIndex = listControlObject.FindIndex(p => xinLongyuControlType.pageType.Equals(p.ctrl_type));
             if (pageIndex == -1)
             {
-                throw new System.Exception("页面缺少主要控件");
+                throw new Exception("页面缺少主要控件");
             }
             listControlObject[pageIndex].d18 = "1";//这里是防止页面控件为隐性
             ControlDetailForPage pageControl = listControlObject[pageIndex];

@@ -30,7 +30,7 @@ namespace xinlongyuOfWpf.CustomControls
             try
             {
                 DecoderOfControl dct = new DecoderOfControl();
-                dct.CtrlId = int.Parse(this.Name);
+                //dct.CtrlId = int.Parse(this.Name);
                 dct.RightDirectValue = (this.Tag as ControlDetailForPage).d0;
                 //执行d0sql的数据获取
                 if (EventAssitant.dealWithSqlRequest(dct, this))

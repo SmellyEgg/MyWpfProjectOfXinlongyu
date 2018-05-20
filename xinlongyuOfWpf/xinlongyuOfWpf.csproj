@@ -191,6 +191,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CustomControls\xinlongyuPasswordBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomControls\xinlongyuReviewControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -255,6 +259,9 @@
     <Compile Include="CustomControls\xinlongyuPage.cs" />
     <Compile Include="CustomControls\xinlongyuPageCacher.cs" />
     <Compile Include="CustomControls\xinlongyuParentControl.cs" />
+    <Compile Include="CustomControls\xinlongyuPasswordBox.xaml.cs">
+      <DependentUpon>xinlongyuPasswordBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\xinlongyuReviewControl.xaml.cs">
       <DependentUpon>xinlongyuReviewControl.xaml</DependentUpon>
     </Compile>

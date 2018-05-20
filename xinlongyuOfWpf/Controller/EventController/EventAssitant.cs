@@ -75,7 +75,7 @@ namespace xinlongyuOfWpf.Controller.EventController
                 {
                     SetCurrentControlList(target);
                     int ctrlIndex = CurrentControlList.FindIndex
-                        (p => (p as Control).Name.Equals(ConfigManagerSection.ControlNamePrefix + docObj.CtrlId.ToString()));
+                        (p => (p as FrameworkElement).Name.Equals(ConfigManagerSection.ControlNamePrefix + docObj.CtrlId.ToString()));
                     if (ctrlIndex == -1 && !docObj.Type.Equals(EventType.SqlType))
                     {
                         return;
@@ -190,7 +190,7 @@ namespace xinlongyuOfWpf.Controller.EventController
             }
             if (!string.IsNullOrEmpty(resultControlId))
             {
-                int ctrlIndex = CurrentControlList.FindIndex(p => (p as Control).Name.Equals(resultControlId));
+                int ctrlIndex = CurrentControlList.FindIndex(p => (p as FrameworkElement).Name.Equals(ConfigManagerSection.ControlNamePrefix +  resultControlId));
                 SetValue(CurrentControlList[ctrlIndex], result.data, resultControlProperty);
             }
             return true;
@@ -376,7 +376,7 @@ namespace xinlongyuOfWpf.Controller.EventController
 
                 try
                 {
-                    int controlIndex = CurrentControlList.FindIndex(p => CommonConverter.StringToInt(ctrlId) == ((p as Control).Tag as ControlDetailForPage).ctrl_id);
+                    int controlIndex = CurrentControlList.FindIndex(p => ctrlId.Equals(((p as FrameworkElement).Tag as ControlDetailForPage).ctrl_id.ToString()));
                     if (controlIndex != -1)
                     {
                         IControl rightControl = CurrentControlList[controlIndex];
@@ -404,7 +404,7 @@ namespace xinlongyuOfWpf.Controller.EventController
 
                 try
                 {
-                    int controlIndex = CurrentControlList.FindIndex(p => CommonConverter.StringToInt(ctrlId) == ((p as Control).Tag as ControlDetailForPage).ctrl_id);
+                    int controlIndex = CurrentControlList.FindIndex(p => CommonConverter.StringToInt(ctrlId) == ((p as FrameworkElement).Tag as ControlDetailForPage).ctrl_id);
                     if (controlIndex != -1)
                     {
                         IControl rightControl = CurrentControlList[controlIndex];

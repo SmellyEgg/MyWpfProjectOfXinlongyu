@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Media;
-using xinlongyuOfWpf.Controller.ControlController;
+﻿using xinlongyuOfWpf.Controller.ControlController;
 using xinlongyuOfWpf.CustomControls.Extension;
 
 namespace xinlongyuOfWpf.CustomControls
 {
+    /// <summary>
+    /// 文本输入框控件
+    /// </summary>
     public class xinlongyuTextBox : textBoxWithPlaceHolderText, IControl
     {
         public xinlongyuTextBox()
@@ -63,6 +56,16 @@ namespace xinlongyuOfWpf.CustomControls
         public void SetD13(string text)
         {
             this.txtTips.Text = text;
+        }
+
+        /// <summary>
+        /// 获取主值
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public object GetD0(string value)
+        {
+            return txtContent.Text;
         }
 
     }

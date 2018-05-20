@@ -53,7 +53,8 @@ namespace xinlongyuOfWpf.CustomControls
                 if (!url.StartsWith("http"))
                 {
                     //url = @"https://icityservice.cn" + url;
-                    url = @"http://192.168.1.157" + url;
+                    //url = @"http://192.168.1.157" + url;
+                    url = Controller.CommonPath.ConfigManagerSection.serverUrl + url;
                 }
                 this.Source = new BitmapImage(new Uri(url));
             }

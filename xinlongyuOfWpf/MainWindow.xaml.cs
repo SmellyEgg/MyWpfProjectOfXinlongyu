@@ -80,7 +80,7 @@ namespace xinlongyuOfWpf
             //加载默认的第一个页面
             int pageId = GetFirstPageID();
             //
-            pageId = 1001;
+            pageId = 2073;
             //
             CommonFunction.ShowWaitingForm(_winMain);
             await _pageFactory.ShowPage(_winMain, pageId, _listPageHistory);
