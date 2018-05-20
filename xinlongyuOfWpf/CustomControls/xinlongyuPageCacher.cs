@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Controls;
+using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.ControlController;
 
 namespace xinlongyuOfWpf.CustomControls
 {
+    /// <summary>
+    /// 页面缓存控件
+    /// </summary>
     public class xinlongyuPageCacher : Button, IControl
     {
         /// <summary>
@@ -16,7 +16,6 @@ namespace xinlongyuOfWpf.CustomControls
         /// <param name="value"></param>
         public void SetD0(object value)
         {
-
             if (value is Dictionary<string, string>[])
             {
                 if ((value as Dictionary<string, string>[]).Length > 0)
@@ -25,11 +24,8 @@ namespace xinlongyuOfWpf.CustomControls
                     {
                         foreach (string key in dic.Keys)
                         {
-                            //Form frm = (this as Control).FindForm();
-                            //if (!object.Equals(frm, null) && !(frm as xinlongyuForm)._pageCache.ContainsKey(key))
-                            //{
-                            //    (frm as xinlongyuForm)._pageCache.Add(key, dic[key]);
-                            //}
+                            var page = CommonFunction.GetPageByControl(this);
+                            page._pageCache.Add(key, dic[key]);
                         }
                     }
                 }
@@ -45,19 +41,20 @@ namespace xinlongyuOfWpf.CustomControls
             //缓存的本地里面
             string valueStr = value.ToString().Trim();
             string[] valueArray = valueStr.Split('&');
-            //var frm = (this as Control).FindForm();
-            Dictionary<string, string> dicTemp = new Dictionary<string, string>();
+            var page = CommonFunction.GetPageByControl(this);
             foreach (string str in valueArray)
             {
-                dicTemp.Add(str.Split('=')[0], str.Split('=')[1]);
-                //(frm as xinlongyuForm)._pageCache.Add(str.Split('=')[0], str.Split('=')[1]);
-            }
-            foreach (string key in dicTemp.Keys)
-            {
-                //if (!object.Equals(frm, null) && !(frm as xinlongyuForm)._pageCache.ContainsKey(key))
-                //{
-                //    (frm as xinlongyuForm)._pageCache.Add(key, DecoderAssistant.FormatSql(dicTemp[key], this));
-                //}
+                var key = str.Split('=')[0];
+                var myvalue = str.Split('=')[1];
+                //这里不用进行判断，如果存在相同的key，直接进行覆盖
+                if (page._pageCache.ContainsKey(key))
+                {
+                    page._pageCache[key] = myvalue;
+                }
+                else
+                {
+                    page._pageCache.Add(key, myvalue);
+                }
             }
         }
 
@@ -70,11 +67,11 @@ namespace xinlongyuOfWpf.CustomControls
         {
             if (!object.Equals(value, null))
             {
-                //Form frm = (this as Control).FindForm();
-                //if (!object.Equals(frm, null) && (frm as xinlongyuForm)._pageCache.ContainsKey(value.ToString()))
-                //{
-                //    return (frm as xinlongyuForm)._pageCache[value.ToString()];
-                //}
+                var page = CommonFunction.GetPageByControl(this);
+                if (page._pageCache.ContainsKey(value.ToString()))
+                {
+                    return page._pageCache[value.ToString()];
+                }
             }
             return null;
         }
@@ -85,14 +82,14 @@ namespace xinlongyuOfWpf.CustomControls
         /// <param name="value"></param>
         public void SetA4(object value)
         {
-            //if (!object.Equals(value, null))
-            //{
-            //    Form frm = (this as Control).FindForm();
-            //    if (!object.Equals(frm, null) && (frm as xinlongyuForm)._pageCache.ContainsKey(value.ToString()))
-            //    {
-            //        (frm as xinlongyuForm)._pageCache.Remove(value.ToString());
-            //    }
-            //}
+            if (!object.Equals(value, null))
+            {
+                var page = CommonFunction.GetPageByControl(this);
+                if (page._pageCache.ContainsKey(value.ToString()))
+                {
+                    page._pageCache.Remove(value.ToString());
+                }
+            }
         }
 
         /// <summary>
@@ -102,13 +99,8 @@ namespace xinlongyuOfWpf.CustomControls
         /// <returns></returns>
         public object GetD0(object value)
         {
-            //Form frm = (this as Control).FindForm();
-            //if (!object.Equals(frm, null) && !object.Equals((frm as xinlongyuForm)._pageCache, null)
-            //    && (frm as xinlongyuForm)._pageCache.Keys.Count > 0)
-            //{
-            //    return (frm as xinlongyuForm)._pageCache;
-            //}
-            return null;
+            var page = CommonFunction.GetPageByControl(this);
+            return page._pageCache;
         }
     }
 }

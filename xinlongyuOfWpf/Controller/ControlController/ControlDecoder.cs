@@ -92,6 +92,7 @@ namespace xinlongyuOfWpf.Controller.ControlController
         /// <param name="gridControl"></param>
         private void AddTitleBar(Grid gridControl, bool isNavigationWindow)
         {
+            
             //设置为两行，一行显示返回按钮以及刷新按钮，另外一行显示内容
             RowDefinition gridRowTitle = new RowDefinition();
             gridRowTitle.Height = GridLength.Auto;
@@ -101,8 +102,9 @@ namespace xinlongyuOfWpf.Controller.ControlController
             gridControl.RowDefinitions.Add(gridRowContent);
 
             StackPanel gridTitle = new StackPanel();
+            //gridTitle.Background = new SolidColorBrush(CommonConverter.ConvertStringToColor("#0080C0"));
             gridTitle.Orientation = Orientation.Horizontal;
-            gridTitle.HorizontalAlignment = HorizontalAlignment.Left;
+            gridTitle.HorizontalAlignment = HorizontalAlignment.Stretch;
             gridTitle.VerticalAlignment = VerticalAlignment.Top;
             //返回按钮
             xinlongyuButton btnBack = new xinlongyuButton();

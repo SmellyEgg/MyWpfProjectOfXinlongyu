@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using xinlongyuOfWpf.Controller.ControlController;
 
 namespace xinlongyuOfWpf.CustomControls
@@ -20,6 +15,12 @@ namespace xinlongyuOfWpf.CustomControls
         public void SetD0(string text)
         {
             this.Content = text;
+        }
+
+        public object GetD0()
+        {
+            if (this.IsChecked == true) return "1";
+            else return "0";
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Media;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.ControlController;
+using xinlongyuOfWpf.Controller.EventController;
 using xinlongyuOfWpf.CustomControls.Extension;
 
 namespace xinlongyuOfWpf.CustomControls
@@ -16,6 +17,36 @@ namespace xinlongyuOfWpf.CustomControls
         {
             //this.TextAlignment = System.Windows.TextAlignment.Center;
             
+        }
+
+        private string _clickEvent = string.Empty;
+
+        /// <summary>
+        /// 设置按钮的单击事件
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetP0(string value)
+        {
+            //string test = value;
+            if (!string.IsNullOrEmpty(value))
+            {
+                _clickEvent = value;
+            }
+            this.txtContent.PreviewMouseDown += TxtContent_PreviewMouseDown;
+        }
+
+        /// <summary>
+        /// 标签的点击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TxtContent_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            //throw new System.NotImplementedException();
+            if (!string.IsNullOrEmpty(_clickEvent))
+            {
+                EventAssitant.CallEventDerectly(_clickEvent, this);
+            }
         }
 
         /// <summary>

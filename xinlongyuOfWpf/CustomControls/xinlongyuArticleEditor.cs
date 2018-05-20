@@ -4,6 +4,7 @@ using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.CommonPath;
 using xinlongyuOfWpf.Controller.ControlController;
 using xinlongyuOfWpf.CustomControls.Extension;
+using xinlongyuOfWpf.Models.ControlInfo;
 using xinlongyuOfWpf.Models.Return;
 
 namespace xinlongyuOfWpf.CustomControls
@@ -69,12 +70,12 @@ namespace xinlongyuOfWpf.CustomControls
                 _currentInnerHtml = doc.DocumentNode.OuterHtml;
                 _currentInnerHtml = _currentInnerHtml.Replace("\"", "\\\"").Replace("'", "''");
 
-                //this.SetP9((this.Tag as ControlDetailForPage).p9);
+                this.SetP9((this.Tag as ControlDetailForPage).p9);
             }
             catch (System.Exception ex)
             {
                 Logging.Error("文章编辑器上传图片出错：" + ex.Message);
-                //this.SetP12((this.Tag as ControlDetailForPage).p12);
+                this.SetP12((this.Tag as ControlDetailForPage).p12);
             }
         }
 
@@ -129,6 +130,10 @@ namespace xinlongyuOfWpf.CustomControls
             //}
         }
 
+        /// <summary>
+        /// 设置主值
+        /// </summary>
+        /// <param name="value"></param>
         public void SetD0(object value)
         {
             if (!object.Equals(value, null))

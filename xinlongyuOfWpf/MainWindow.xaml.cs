@@ -65,6 +65,7 @@ namespace xinlongyuOfWpf
         private async void LoadPage()
         {
             _winMain = new Window();
+            //_winMain.WindowStyle = WindowStyle.None;
             _winMain.Tag = _listPageHistory;
             _winMain.ResizeMode = ResizeMode.CanResize;
             //设置图标

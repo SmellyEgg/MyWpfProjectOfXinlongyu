@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Controls;
 using xinlongyuOfWpf.Controller.ControlController;
+using xinlongyuOfWpf.Controller.EventController;
 
 namespace xinlongyuOfWpf.CustomControls
 {
@@ -63,8 +64,7 @@ namespace xinlongyuOfWpf.CustomControls
             }
             foreach (string key in dicTemp.Keys)
             {
-                //暂时注释，后面h实现事件的时候顺便实现这个
-                //LocalCacher.AddCache(key, DecoderAssistant.FormatSql(dicTemp[key], this));
+                LocalCacher.AddCache(key, EventAssitant.FormatSql(dicTemp[key], this));
             }
         }
 
