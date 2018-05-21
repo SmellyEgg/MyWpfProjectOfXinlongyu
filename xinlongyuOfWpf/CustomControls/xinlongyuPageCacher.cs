@@ -25,7 +25,15 @@ namespace xinlongyuOfWpf.CustomControls
                         foreach (string key in dic.Keys)
                         {
                             var page = CommonFunction.GetPageByControl(this);
-                            page._pageCache.Add(key, dic[key]);
+                            if (object.Equals(page._pageCache, null)) page._pageCache = new Dictionary<string, string>();
+                            if (page._pageCache.ContainsKey(key))
+                            {
+                                page._pageCache[key] = dic[key];
+                            }
+                            else
+                            {
+                                page._pageCache.Add(key, dic[key]);
+                            }
                         }
                     }
                 }

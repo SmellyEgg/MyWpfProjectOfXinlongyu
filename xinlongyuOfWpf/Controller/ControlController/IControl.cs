@@ -361,13 +361,13 @@ namespace xinlongyuOfWpf.Controller.ControlController
             }
 
             //数据获取后执行的事件
-            //if (!object.Equals(value, null) && !string.IsNullOrEmpty(value.ToString()))
-            //{
-            //    if (!string.IsNullOrEmpty(((inControl as FrameworkElement).Tag as ControlDetailForPage).p4))
-            //    {
-            //        DecoderAssistant.CallEventDerectly(((inControl as FrameworkElement).Tag as ControlDetailForPage).p4, inControl);
-            //    }
-            //}
+            if (!object.Equals(value, null) && !string.IsNullOrEmpty(value.ToString()))
+            {
+                if (!string.IsNullOrEmpty(((inControl as FrameworkElement).Tag as ControlDetailForPage).p4))
+                {
+                    EventAssitant.CallEventDerectly(((inControl as FrameworkElement).Tag as ControlDetailForPage).p4, inControl);
+                }
+            }
         }
 
         /// <summary>

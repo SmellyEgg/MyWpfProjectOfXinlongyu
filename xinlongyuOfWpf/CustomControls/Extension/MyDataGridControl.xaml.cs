@@ -9,6 +9,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.CommonType;
+using xinlongyuOfWpf.Controller.ControlController;
+using xinlongyuOfWpf.Controller.EventController;
 using xinlongyuOfWpf.Models.ControlInfo;
 using xinlongyuOfWpf.Models.OtherModel;
 
@@ -46,6 +48,28 @@ namespace xinlongyuOfWpf.CustomControls.Extension
         /// </summary>
         private int _rowCount = 0;
 
+
+        /// <summary>
+        /// 这里是用来刷新表格的
+        /// </summary>
+        /// <param name="inText"></param>
+        public void SetA0(object inText)
+        {
+            var listControlObj = CommonFunction.GetPageByControl(this)._currentControlObjList;
+            LoadData(listControlObj, this.Tag as ControlDetailForPage, _currentIControl);
+        }
+
+        /// <summary>
+        /// 从数据源中获取
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public object SetA3(object value)
+        {
+            if (object.Equals(value, null) || string.IsNullOrEmpty(value.ToString())) return string.Empty;
+            return GetDataFromDatagrid(value.ToString());
+        }
+
         /// <summary>
         /// 数据源
         /// </summary>
@@ -63,14 +87,17 @@ namespace xinlongyuOfWpf.CustomControls.Extension
             _sqlController = new SqlController();
         }
 
+        private IControl _currentIControl;
+
         /// <summary>
         /// 加载数据
         /// </summary>
         /// <param name="listControlObj"></param>
         /// <param name="gridObj"></param>
-        public void LoadData(List<ControlDetailForPage> listControlObj, ControlDetailForPage gridObj)
+        public void LoadData(List<ControlDetailForPage> listControlObj, ControlDetailForPage gridObj, IControl icontrol)
         {
             _CurrentCtObj = gridObj;
+            _currentIControl = icontrol;
             SetDataGridColumns(listControlObj, _CurrentCtObj);
             DealWithPageIndex();
             PageTurning();
@@ -83,6 +110,7 @@ namespace xinlongyuOfWpf.CustomControls.Extension
         private void SetDataSource(string sql)
         {
             //var sql = obj.d0;
+            sql = EventAssitant.FormatSql(sql, _currentIControl);
             var dicarray = _sqlController.ExcuteSqlWithReturn(sql).data;
             if (object.Equals(dicarray, null)) return;
             //每次都清空然后添加到数据源中
@@ -512,6 +540,7 @@ namespace xinlongyuOfWpf.CustomControls.Extension
         private int GetTotalRowCount()
         {
             string _rowCountSql = _CurrentCtObj.d14;
+            _rowCountSql = EventAssitant.FormatSql(_rowCountSql, _currentIControl);
             if (!string.IsNullOrEmpty(_rowCountSql))
             {
                 var result = _sqlController.ExcuteSqlWithReturn(_rowCountSql);

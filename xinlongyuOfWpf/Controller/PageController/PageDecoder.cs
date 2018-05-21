@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.CommonType;
 using xinlongyuOfWpf.Controller.ControlController;
+using xinlongyuOfWpf.Controller.EventController;
 using xinlongyuOfWpf.CustomControls;
 using xinlongyuOfWpf.Models.ControlInfo;
 using xinlongyuOfWpf.Models.PageInfo;
@@ -84,26 +86,12 @@ namespace xinlongyuOfWpf.Controller.PageController
             //界面控件数组
             List<IControl> listControl = new List<IControl>();
             var page = _controlDecode.ProduceControl(pageControl, listControl, listControlObject, isNavigationWindow);
-            //设置页面控件基本属性
-            foreach (IControl control in listControl)
-            {
-                ControlDetailForPage controlObj = (control as FrameworkElement).Tag as ControlDetailForPage;
-                _controlDecode.SetControlProperty(control, controlObj);
-            }
-
-            //设置控件基本事件
-            foreach (IControl control in listControl)
-            {
-                _controlDecode.SetControlEvent(control, (control as FrameworkElement).Tag as ControlDetailForPage);
-            }
+           
             page._currentControlList = listControl;
             page._currentControlObjList = listControlObject;
-
             return page;
 
-            ////页面初始化事件
-            //IControl page = listControl.First(p => ((p as Control).Tag as ControlDetailForPage).ctrl_type.Equals(xinLongyuControlType.pageType));
-            //page.SetP7(((page as Control).Tag as ControlDetailForPage).p7);
+            
         }
     }
 }

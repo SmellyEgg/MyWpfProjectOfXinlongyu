@@ -10,6 +10,7 @@ using xinlongyuOfWpf.Controller.CommonPath;
 using xinlongyuOfWpf.Controller.CommonType;
 using xinlongyuOfWpf.Controller.PageController;
 using xinlongyuOfWpf.CustomControls;
+using xinlongyuOfWpf.CustomControls.Extension;
 using xinlongyuOfWpf.Models.ControlInfo;
 
 namespace xinlongyuOfWpf.Controller.ControlController
@@ -53,8 +54,8 @@ namespace xinlongyuOfWpf.Controller.ControlController
         /// <returns></returns>
         public xinlongyuForm ProduceControl(ControlDetailForPage pageobj, List<IControl> listControl, List<ControlDetailForPage> listControlObj, bool isNavigationWindow)
         {
-            Grid _currentForm = new Grid();
-            AddTitleBar(_currentForm, isNavigationWindow);
+            xinlongyuParentControl _currentForm = new xinlongyuParentControl();
+            AddTitleBar(_currentForm, pageobj, isNavigationWindow);
             if (_fatherControlList.Contains(pageobj.ctrl_type))
             {
                 this.ProduceFatherControl(pageobj, listControlObj, listControl, _currentForm, true);
@@ -90,7 +91,7 @@ namespace xinlongyuOfWpf.Controller.ControlController
         /// 添加标题栏
         /// </summary>
         /// <param name="gridControl"></param>
-        private void AddTitleBar(Grid gridControl, bool isNavigationWindow)
+        private void AddTitleBar(xinlongyuParentControl gridControl, ControlDetailForPage pageObj, bool isNavigationWindow)
         {
             
             //设置为两行，一行显示返回按钮以及刷新按钮，另外一行显示内容
@@ -148,10 +149,8 @@ namespace xinlongyuOfWpf.Controller.ControlController
                     window.Content = page;
                     window.Width = page.Width;
                     window.Height = page.Height + ConfigManagerSection.TitleBarHeight;
-                }
-                else
-                {
-
+                    //页面初始化事件
+                    //gridControl.SetP7(pageObj.p7);
                 }
             };
             //刷新事件
@@ -239,6 +238,10 @@ namespace xinlongyuOfWpf.Controller.ControlController
             {
                 control = new xinlongyuCacher();
             }
+            else if (xinLongyuControlType.pageCacheType.Equals(obj.ctrl_type))
+            {
+                control = new xinlongyuPageCacher();
+            }
             else if (xinLongyuControlType.tooltipType.Equals(obj.ctrl_type))
             {
                 control = new xinlongyuToolTip();
@@ -314,6 +317,10 @@ namespace xinlongyuOfWpf.Controller.ControlController
         /// </summary>
         public void ProduceFatherControl(ControlDetailForPage controlObj, List<ControlDetailForPage> listControlObj, List<IControl> listControl, UIElement fatherControl, bool isNeedSetRow = false)
         {
+            if (controlObj.ctrl_type.Equals(xinLongyuControlType.PCGrid))
+            {
+                string teset = string.Empty;
+            }
             IControl newfatherControl = this.ProductChildControl(controlObj, listControl, fatherControl);
             if (isNeedSetRow) (newfatherControl as FrameworkElement).SetValue(Grid.RowProperty, 1);
 
@@ -326,7 +333,7 @@ namespace xinlongyuOfWpf.Controller.ControlController
             //表格控件也由自身进行初始化
             if (xinLongyuControlType.PCGrid.Equals(controlObj.ctrl_type))
             {
-                (newfatherControl as xinlongyuDataGird).LoadData(listControlObj, controlObj);
+                //(newfatherControl as xinlongyuDataGird).LoadMyData(listControlObj, controlObj);
                 return;
             }
 

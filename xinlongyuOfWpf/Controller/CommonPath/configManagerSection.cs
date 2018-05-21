@@ -52,8 +52,8 @@ namespace xinlongyuOfWpf.Controller.CommonPath
         /// <summary>
         /// 通用api地址
         /// </summary>
-        public static readonly string serverUrl = @"https://icityservice.cn";
-        //public static readonly string serverUrl = @"http://192.168.1.157";
+        //public static readonly string serverUrl = @"https://icityservice.cn";
+        public static readonly string serverUrl = @"http://192.168.1.157";
 
         /// <summary>
         /// 标题栏高度

@@ -1,4 +1,5 @@
-﻿using xinlongyuOfWpf.Controller.ControlController;
+﻿using xinlongyuOfWpf.Controller.CommonController;
+using xinlongyuOfWpf.Controller.ControlController;
 using xinlongyuOfWpf.CustomControls.Extension;
 
 namespace xinlongyuOfWpf.CustomControls
@@ -47,6 +48,17 @@ namespace xinlongyuOfWpf.CustomControls
             //(this as TextBox).Style = style;
             #endregion
 
+        }
+
+        /// <summary>
+        /// 设置限制的长度
+        /// </summary>
+        /// <param name="text"></param>
+        public void SetD11(string text)
+        {
+            if (string.IsNullOrEmpty(text)) return;
+            var length = CommonConverter.StringToInt(text);
+            if (length != -1) this.txtContent.MaxLength = length;
         }
 
         /// <summary>

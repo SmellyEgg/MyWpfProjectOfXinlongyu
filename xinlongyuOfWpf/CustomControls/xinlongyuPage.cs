@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.ControlController;
+using xinlongyuOfWpf.Controller.EventController;
 using xinlongyuOfWpf.Controller.PageController;
 using xinlongyuOfWpf.Models.ControlInfo;
 
@@ -27,11 +28,19 @@ namespace xinlongyuOfWpf.CustomControls
         /// 这里是用来刷新页面的
         /// </summary>
         /// <param name="inText"></param>
-        public void SetA0(string inText)
+        public async void SetA0(string inText)
         {
             int pageId = (this.Tag as ControlDetailForPage).page_id;
-            xinlongyuForm frm = this.Parent as xinlongyuForm;
-            //刷新页面的操作，这里还没想好要怎么实现
+
+            var window = Window.GetWindow(this);
+            var page = window.Content as xinlongyuForm;
+            var listPage = window.Tag as List<Page>;
+            if (!object.Equals(page, null))
+            {
+                listPage.RemoveAt(listPage.Count - 1);
+                PageFactory pageFactory = new PageFactory();
+                await pageFactory.ShowPage(window, page.PageId, listPage);
+            }
         }
 
         /// <summary>
@@ -44,11 +53,11 @@ namespace xinlongyuOfWpf.CustomControls
             if (!object.Equals(value, null) && !string.IsNullOrEmpty(value.ToString()))
             {
                 //根据key获取页面的缓存的值，这里还没有实现
-                //Form frm = (this as Control).FindForm();
-                //if (!object.Equals(frm, null) && (frm as xinlongyuForm)._pageCache.ContainsKey(value.ToString()))
-                //{
-                //    return (frm as xinlongyuForm)._pageCache[value.ToString()];
-                //}
+                var page = CommonFunction.GetPageByControl(this);
+                if (page._pageCache.ContainsKey(value.ToString()))
+                {
+                    return page._pageCache[value.ToString()];
+                }
             }
             return string.Empty;
         }
@@ -60,7 +69,8 @@ namespace xinlongyuOfWpf.CustomControls
         /// <returns></returns>
         public object SetA4(object value)
         {
-            //Window.GetWindow(this).WindowState = WindowState.Minimized;
+            var window = Window.GetWindow(this);
+            window.WindowState = WindowState.Minimized;
             return null;
         }
 
@@ -82,7 +92,7 @@ namespace xinlongyuOfWpf.CustomControls
         public void SetA6(string inText)
         {
             bool isDialog = true;
-            //this.OpenPage(inText, isDialog);
+            OpenPage(inText, isDialog);
         }
 
         /// <summary>
@@ -90,15 +100,12 @@ namespace xinlongyuOfWpf.CustomControls
         /// </summary>
         /// <param name="inText"></param>
         /// <param name="isDialog"></param>
-        private async void OpenPage(string inText, bool isDialog)
+        private async void OpenPage(string inText, bool isDialog = false)
         {
             int pageId = CommonConverter.StringToInt(inText);
             if (pageId != -1)
             {
-                var window = Window.GetWindow(this);
-                CommonFunction.ShowWaitingForm(window);
-                PageFactory pagefactory = new PageFactory();
-                await pagefactory.ShowPage(window, pageId, window.Tag as List<Page>);
+                OpenPageById(pageId, isDialog);
             }
             //接下来是有传值的方法，格式应该是类似(1236, text={1.d0}&type=animal)
             else
@@ -110,27 +117,53 @@ namespace xinlongyuOfWpf.CustomControls
                     string[] parameterArray = parameters.Split('&');
                     Dictionary<string, string> dicParameter = new Dictionary<string, string>();
                     Dictionary<string, string> dicParameterResult = new Dictionary<string, string>();
-
                     foreach (string str in parameterArray)
                     {
                         dicParameter.Add(str.Split('=')[0], str.Split('=')[1]);
                     }
-
                     foreach (string key in dicParameter.Keys)
                     {
-                        //dicParameterResult.Add(key, DecoderAssistant.FormatSql(dicParameter[key], this));
+                        dicParameterResult.Add(key, EventAssitant.FormatSql(dicParameter[key], this));
                     }
-                    //pageController.CreatePage(pageId, isDialog, isNeedThread, dicParameterResult);
+                    OpenPageById(pageId, isDialog, dicParameterResult);
                 }
                 else
                 {
-                    //string pageid = DecoderAssistant.FormatSql(inText, this);
-                    //pageId = CommonConverter.StringToInt(pageid);
+                    string pageid = EventAssitant.FormatSql(inText, this);
+                    pageId = CommonConverter.StringToInt(pageid);
                     if (pageId != -1)
                     {
-                        //pageController.CreatePage(pageId, isDialog, isNeedThread, null);
+                        OpenPageById(pageId, isDialog);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// 打开页面
+        /// </summary>
+        /// <param name="pageId"></param>
+        /// <param name="parameter">参数字典</param>
+        private async void OpenPageById(int pageId, bool isDialog = false, Dictionary<string, string> parameter = null)
+        {
+            PageFactory pagefactory = new PageFactory();
+            if (isDialog)
+            {
+                var window = new Window();
+                CommonFunction.ShowWaitingForm(window);
+                var page = await pagefactory.ProducePage(pageId);
+                window.Content = null;
+                window.Content = page;
+                window.Title = page.Title;
+                window.Hide();
+                window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                window.ShowDialog();
+            }
+            else
+            {
+                var window = Window.GetWindow(this);
+                CommonFunction.ShowWaitingForm(window); 
+                await pagefactory.ShowPage(window, pageId, window.Tag as List<Page>);
             }
         }
 
@@ -140,7 +173,9 @@ namespace xinlongyuOfWpf.CustomControls
         /// <param name="inText"></param>
         public void SetA7(string inText)
         {
-            Window.GetWindow(this).Close();
+            var window = Window.GetWindow(this as Grid);
+            var listPage = window.Tag as List<Page>;
+            listPage.RemoveAt(listPage.Count - 1);
         }
 
         /// <summary>
@@ -149,6 +184,8 @@ namespace xinlongyuOfWpf.CustomControls
         /// <param name="inText"></param>
         public void SetA8(string inText)
         {
+            var window = Window.GetWindow(this);
+            window.Close();
         }
 
         /// <summary>
@@ -159,7 +196,7 @@ namespace xinlongyuOfWpf.CustomControls
         {
             if (!object.Equals(value, null) && !string.IsNullOrEmpty(value.ToString()))
             {
-                //DecoderAssistant.CallEventDerectly(value.ToString(), this);
+                EventAssitant.CallEventDerectly(value.ToString(), this);
             }
         }
     }

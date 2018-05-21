@@ -43,8 +43,9 @@ namespace xinlongyuOfWpf.CustomControls
         /// 设置参数，相当于添加缓存
         /// </summary>
         /// <param name="parameter"></param>
-        private void SetParameters(Dictionary<string, string> parameter)
+        public void SetParameters(Dictionary<string, string> parameter)
         {
+            if (object.Equals(parameter, null)) _pageCache = new Dictionary<string, string>();
             if (!object.Equals(parameter, null) && parameter.Keys.Count > 0)
             {
                 this._pageCache = parameter;

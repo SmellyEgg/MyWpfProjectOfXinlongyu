@@ -15,26 +15,40 @@ namespace xinlongyuOfWpf.CustomControls
     /// </summary>
     public class xinlongyuDataGird : MyDataGridControl, IControl
     {
-
         /// <summary>
-        /// 这里是用来刷新表格的
+        /// 加载数据
         /// </summary>
-        /// <param name="inText"></param>
-        public void SetA0(object inText)
+        //public void LoadMyData(List<ControlDetailForPage> listControlObj, ControlDetailForPage gridObj)
+        //{
+        //   // var listControlObj = CommonFunction.GetPageByControl(this)._currentControlObjList;
+        //    LoadData(listControlObj, gridObj, this);
+        //}
+        ///// <summary>
+        ///// 这里是用来刷新表格的
+        ///// </summary>
+        ///// <param name="inText"></param>
+        //public void SetA0(object inText)
+        //{
+        //    var listControlObj = CommonFunction.GetPageByControl(this)._currentControlObjList;
+        //    LoadData(listControlObj, this.Tag as ControlDetailForPage);
+        //}
+
+        ///// <summary>
+        ///// 从数据源中获取
+        ///// </summary>
+        ///// <param name="value"></param>
+        ///// <returns></returns>
+        //public object SetA3(object value)
+        //{
+        //    if (object.Equals(value, null) || string.IsNullOrEmpty(value.ToString())) return string.Empty;
+        //    return GetDataFromDatagrid(value.ToString());
+        //}
+
+        
+        public void SetD0(string text)
         {
             var listControlObj = CommonFunction.GetPageByControl(this)._currentControlObjList;
-            LoadData(listControlObj, this.Tag as ControlDetailForPage);
-        }
-
-        /// <summary>
-        /// 从数据源中获取
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public object SetA3(object value)
-        {
-            if (object.Equals(value, null) || string.IsNullOrEmpty(value.ToString())) return string.Empty;
-            return GetDataFromDatagrid(value.ToString());
+            LoadData(listControlObj, this.Tag as ControlDetailForPage, this);
         }
     }
 }

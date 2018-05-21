@@ -11,13 +11,14 @@ namespace xinlongyuOfWpf.Controller.CommonController
         /// <summary>
         /// 显示等待窗体
         /// </summary>
-        public static void ShowWaitingForm(Window window)
+        public static void ShowWaitingForm(Window window, bool isDialog = false)
         {
             Xceed.Wpf.Toolkit.BusyIndicator btControl = new Xceed.Wpf.Toolkit.BusyIndicator();
             btControl.IsBusy = true;
             btControl.BusyContent = "正在加载中";
             window.Content = btControl;
-            window.Show();
+            if (isDialog) window.ShowDialog();
+            else window.Show();
         }
 
         /// <summary>
@@ -27,15 +28,27 @@ namespace xinlongyuOfWpf.Controller.CommonController
         /// <returns></returns>
         public static xinlongyuForm GetPageByControl(DependencyObject obj)
         {
-            var parent = VisualTreeHelper.GetParent(obj);
-            bool isFinded = false;
-            while (!(parent is xinlongyuForm))
+            try
             {
-                parent = VisualTreeHelper.GetParent(parent);
-                isFinded = true;
+                var parent = VisualTreeHelper.GetParent(obj);
+                bool isFinded = false;
+                while (!(parent is xinlongyuForm) && !(parent is Page))
+                {
+                    parent = VisualTreeHelper.GetParent(parent);
+                    isFinded = true;
+                }
+                if (!isFinded) return null;
+                var page = parent as xinlongyuForm;
+                if (object.Equals(page._pageCache, null)) page._pageCache = new System.Collections.Generic.Dictionary<string, string>();
+                return page;
             }
-            if (!isFinded) return null;
-            return parent as xinlongyuForm;
+            catch (System.Exception ex)
+            {
+                var window = Window.GetWindow(obj);
+                var page = window.Content as xinlongyuForm;
+                if (object.Equals(page._pageCache, null)) page._pageCache = new System.Collections.Generic.Dictionary<string, string>();
+                return page;
+            }
         }
     }
 }
