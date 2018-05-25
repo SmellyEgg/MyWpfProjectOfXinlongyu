@@ -254,6 +254,14 @@ namespace xinlongyuOfWpf.Controller.ControlController
             {
                 control = new xinlongyuGetData();
             }
+            else if (xinLongyuControlType.fileUploader.Equals(obj.ctrl_type))
+            {
+                control = new xinlongyuUploadControl();
+            }
+            else if (xinLongyuControlType.checkboxType.Equals(obj.ctrl_type))
+            {
+                control = new xinlongyuCheckBoxControl();
+            }
             else
             {
                 return null;
@@ -327,7 +335,7 @@ namespace xinlongyuOfWpf.Controller.ControlController
             //导航栏控件由自身进行初始化
             if (xinLongyuControlType.pcnavigationBarType.Equals(controlObj.ctrl_type))
             {
-                (newfatherControl as xinlongyuNavigationControl).InitControl(controlObj, listControlObj, listControl);
+                //(newfatherControl as xinlongyuNavigationControl).InitControl(controlObj, listControlObj, listControl);
                 return;
             }
             //表格控件也由自身进行初始化

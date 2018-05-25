@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using xinlongyuOfWpf.Controller.CommonController;
 using xinlongyuOfWpf.Controller.CommonType;
-using xinlongyuOfWpf.Controller.ControlController;
 using xinlongyuOfWpf.Models.GroupInfo;
 using xinlongyuOfWpf.Models.PageInfo;
 using xinlongyuOfWpf.Models.Request;

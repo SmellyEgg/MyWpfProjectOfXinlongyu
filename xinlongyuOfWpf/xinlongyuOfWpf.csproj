@@ -104,6 +104,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WPF.FlipView">
+      <HintPath>bin\x64\Debug\ExternalDll\WPF.FlipView.dll</HintPath>
+    </Reference>
     <Reference Include="Xceed.Wpf.AvalonDock, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
     </Reference>
@@ -187,6 +190,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CustomControls\xinlongyuBanner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\xinlongyuCheckBoxControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomControls\xinlongyuMultipleFileUploader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -239,9 +250,14 @@
       <DependentUpon>textBoxWithPlaceHolderText.xaml</DependentUpon>
     </Compile>
     <Compile Include="CustomControls\xinlongyuArticleEditor.cs" />
+    <Compile Include="CustomControls\xinlongyuBanner.xaml.cs">
+      <DependentUpon>xinlongyuBanner.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\xinlongyuButton.cs" />
     <Compile Include="CustomControls\xinlongyuCacher.cs" />
-    <Compile Include="CustomControls\xinlongyuCheckbox.cs" />
+    <Compile Include="CustomControls\xinlongyuCheckBoxControl.xaml.cs">
+      <DependentUpon>xinlongyuCheckBoxControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\xinlongyuCombobox.cs" />
     <Compile Include="CustomControls\xinlongyuDataChartControl.cs" />
     <Compile Include="CustomControls\xinlongyuDataGird.cs" />

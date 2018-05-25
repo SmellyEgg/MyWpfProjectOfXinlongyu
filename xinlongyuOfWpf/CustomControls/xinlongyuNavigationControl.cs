@@ -20,6 +20,14 @@ namespace xinlongyuOfWpf.CustomControls
             this.BorderThickness = new Thickness(0);
         }
 
+        public void SetD0(string text)
+        {
+            var controlObj = this.Tag as ControlDetailForPage;
+            var page = CommonFunction.GetPageByControl(this);
+            //var listControlObj = 
+            InitControl(controlObj, page._currentControlObjList, page._currentControlList);
+        }
+
         /// <summary>
         /// 初始化控件，由于比较复杂，所以这种情况由控件自身进行初始化
         /// </summary>

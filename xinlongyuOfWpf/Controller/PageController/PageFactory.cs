@@ -85,45 +85,52 @@ namespace xinlongyuOfWpf.Controller.PageController
         public async Task ShowPage(ContentControl window, int pageId, List<Page> listPage, Dictionary<string, string> parameter = null)
         {
             //window.Content = null;
-            var page = await ProducePage(pageId);
-            if (object.Equals(page, null))
+            try
             {
-                page = await GetDefaultPage();
-            }
-            window.Content = null;
-            if (!object.Equals(parameter, null))
-            {
-                page.SetParameters(parameter);
-            }
-            window.Content = page;
-            //listPage.Add(page);
-            window.Width = page.Width;
-            window.Height = page.Height + ConfigManagerSection.TitleBarHeight;
+                var page = await ProducePage(pageId);
+                if (object.Equals(page, null))
+                {
+                    page = await GetDefaultPage();
+                }
+                window.Content = null;
+                if (!object.Equals(parameter, null))
+                {
+                    page.SetParameters(parameter);
+                }
+                window.Content = page;
+                //listPage.Add(page);
+                window.Width = page.Width;
+                window.Height = page.Height + ConfigManagerSection.TitleBarHeight;
 
-            //设置页面控件基本属性
-            foreach (IControl control in page._currentControlList)
-            {
-                ControlDetailForPage controlObj = (control as FrameworkElement).Tag as ControlDetailForPage;
-                _controlDecode.SetControlProperty(control, controlObj);
+                //设置页面控件基本属性
+                foreach (IControl control in page._currentControlList)
+                {
+                    ControlDetailForPage controlObj = (control as FrameworkElement).Tag as ControlDetailForPage;
+                    _controlDecode.SetControlProperty(control, controlObj);
+                }
+
+                //设置控件基本事件
+                foreach (IControl control in page._currentControlList)
+                {
+                    _controlDecode.SetControlEvent(control, (control as FrameworkElement).Tag as ControlDetailForPage);
+                }
+
+                //页面初始化事件
+                IControl mypageControl = page._currentControlList.First(p => xinLongyuControlType.pageType.Equals(((p as FrameworkElement).Tag as Models.ControlInfo.ControlDetailForPage).ctrl_type));
+                var pageObj = page._currentControlObjList.First(p => xinLongyuControlType.pageType.Equals(p.ctrl_type));
+                mypageControl.SetP7(pageObj.p7);
+                //
+
+                if (window.GetType() == typeof(Window))
+                {
+                    listPage.Add(page);
+                    (window as Window).Title = page.Title;
+                    (window as Window).Show();
+                }
             }
-
-            //设置控件基本事件
-            foreach (IControl control in page._currentControlList)
+            catch
             {
-                _controlDecode.SetControlEvent(control, (control as FrameworkElement).Tag as ControlDetailForPage);
-            }
 
-            //页面初始化事件
-            IControl mypageControl = page._currentControlList.First(p => xinLongyuControlType.pageType.Equals(((p as FrameworkElement).Tag as Models.ControlInfo.ControlDetailForPage).ctrl_type));
-            var pageObj = page._currentControlObjList.First(p => xinLongyuControlType.pageType.Equals(p.ctrl_type));
-            mypageControl.SetP7(pageObj.p7);
-            //
-
-            if (window.GetType() == typeof(Window))
-            {
-                listPage.Add(page);
-                (window as Window).Title = page.Title;
-                (window as Window).Show();
             }
         }
     }
