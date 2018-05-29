@@ -163,7 +163,7 @@ namespace xinlongyuOfWpf.Controller.ControlController
                 {
                     listPage.RemoveAt(listPage.Count - 1);
                     PageFactory pageFactory = new PageFactory();
-                    await pageFactory.ShowPage(window, page.PageId, listPage);
+                    await pageFactory.ShowPage(window, page.PageId, listPage).ConfigureAwait(false);
                     MessageBox.Show("刷新成功");
                 }
             };

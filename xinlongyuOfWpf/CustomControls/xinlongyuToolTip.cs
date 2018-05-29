@@ -1,6 +1,11 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using xinlongyuOfWpf.Controller.ControlController;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Position;
+using ToastNotifications.Messages;
+using System;
 
 namespace xinlongyuOfWpf.CustomControls
 {
@@ -19,6 +24,21 @@ namespace xinlongyuOfWpf.CustomControls
         {
             this.Visibility = System.Windows.Visibility.Collapsed;
         }
+
+        Notifier notifier = new Notifier(cfg =>
+        {
+            cfg.PositionProvider = new WindowPositionProvider(
+                parentWindow: Application.Current.MainWindow,
+                corner: Corner.TopRight,
+                offsetX: 10,
+                offsetY: 10);
+
+            cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                notificationLifetime: TimeSpan.FromSeconds(3),
+                maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+            cfg.Dispatcher = Application.Current.Dispatcher;
+        });
 
         /// <summary>
         /// 设置主值
@@ -47,6 +67,7 @@ namespace xinlongyuOfWpf.CustomControls
         public void SetA1(string text)
         {
             MessageBox.Show(_text, "提示");
+            //notifier.ShowInformation(_text);
         }
 
 
